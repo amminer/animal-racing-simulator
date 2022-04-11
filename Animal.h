@@ -29,13 +29,15 @@ class Animal
 		//TODO copy constructor, operator= when name is char*
 		//Animal(const Animal& src) = delete;
 		//const Animal& operator=(const Animal& rhs) = delete;
-		//TODO operator<<
 		friend ostream& operator<<(ostream& os, const Animal& oa);
+		bool operator==(const Animal& other);
+
 		string get_name(void) const;
 		string get_breed(void) const; 
 		void set_name(string new_name);
 		void set_breed(string new_breed);
 		void display(void);
+
         /* Animal::is_faster_than(Animal& competitor, float dist)
          * PURPOSE:	returns whether this animal is faster than competitor
 		 * 	based on how their is_faster_than functions compute their

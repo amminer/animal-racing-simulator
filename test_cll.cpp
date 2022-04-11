@@ -11,9 +11,9 @@ using namespace std;
 int main(void)
 {
 	CLL<int> list;
-	list.insert(1);
-	list.insert(3);
-	list.insert(5);
-	list.insert(7);
+	list.push_back(1);
+	list.push_back(3);
+	list.push_back(5);
+	list.push_back(7);
 	list.display();
 }

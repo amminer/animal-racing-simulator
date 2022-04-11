@@ -100,25 +100,33 @@ class CLL													//TODO
 		CLL(void)
 			: head(nullptr), tail(nullptr) {}
 
-		~CLL(void) //delete all nodes if there are any
+		~CLL(void)
 		{
-			Node<T>* temp = head;
-			while (temp->get_next() != head){
-				temp = head;
-				head = head->get_next();
-				delete temp;
-			}
+			if (head)
+				remove_all(head);
+		}
+		void remove_all(Node<T>* to_delete)
+		{
+			if (to_delete->get_next() != head)
+				remove_all(to_delete->get_next());
+			delete to_delete;
 		}
 
 		CLL(const CLL& src) = delete;
 		const CLL& operator=(const CLL& rhs) = delete;
 
-        /* CLL::insert(T& new_data)
-         * PURPOSE:	insert a new node at the "tail" of the linkedlist, before head and after tail.
-         * ARGS:    new_data, the new data member to be wrapped in a node and inserted.
+		// More legible and public alternative to (bool) !head
+		bool is_empty(void)
+		{
+			return !head;
+		}
+
+        /* CLL::push_back(T& new_data)
+         * PURPOSE:	insert a new node at the tail of the linkedlist,
+         * ARGS:    new_data, data to be wrapped in a node and inserted.
          * RETURN:  None.
          */
-		void insert(T new_data)
+		void push_back(T new_data)
 		{
 			Node<T>* new_node = new Node<T>(new_data);
 			if (!head){
@@ -136,30 +144,60 @@ class CLL													//TODO
 			head->set_prev(new_node);
 			new_node->set_next(head);
 		}
-		
-		bool is_empty(void)
-		{
-			return !head;
-		}
 
-		void remove(int index) 	//Would like to be able to remove by string key,
-		{					  	//unsure of how w/ templating
+		void push_front(T new_data)
+		{
 			//TODO - not strictly necessary for asgmt1
 		}
 
-		//would like to be able to lookup by string key,
-		//unsure of how w/ templating
-		/*
-		template<> T* lookup<Animal>(string key)
+		void insert_at(T new_data, int position)
 		{
-			T* temp = head;
-			while (temp){
-				if (temp->get_name() == key)
-					return temp;
-			}
-			return nullptr;
+			//TODO - not strictly necessary for asgmt1
 		}
-		*/
+
+		T* lookup(T key) //must not use reference to accept rvalue arg
+		{
+			Node<T>* ret_node = nullptr;
+			T* ret = nullptr;
+			if (head){
+				ret_node = find_node(head, key);
+				if (ret_node){
+					ret = ret_node->get_data_ptr();
+				}
+			}
+			return ret;
+		}
+		Node<T>* find_node(Node<T>* list, T key) //must accept rvalue arg
+		{
+			if (list->get_data() == key)
+				return list;
+			else if (list->get_next() != head)
+				return find_node(list->get_next(), key);
+			else
+				return nullptr;
+		}
+
+		void pop_back(void)
+		{ 
+			//TODO - not strictly necessary for asgmt1
+		}
+
+		void pop_front(void)
+		{ 
+			//TODO - not strictly necessary for asgmt1
+		}
+
+		void remove(T& toRemove)
+		{ 
+			//TODO - not strictly necessary for asgmt1
+		}
+
+		void remove_at(int index)
+		{ 
+			//TODO - not strictly necessary for asgmt1
+		}
+
+	
 
 		int size(void)
 		{

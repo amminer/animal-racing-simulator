@@ -27,6 +27,14 @@ Animal::~Animal(void)
 Animal::Animal(string newName)
 	: name(newName), breed("UNKNOWN") {}
 
+bool Animal::operator==(const Animal& other)
+{
+	if (other.name == name)
+		return true;
+	else
+		return false;
+}
+
 string Animal::get_name(void) const
 {
 	return name;
