@@ -59,13 +59,6 @@ bool Animal::is(Animal& other)
 	return this == &other;
 }
 
-bool Animal::is_faster_than(Animal& competitor, float dist)
-{
-	if (this->calculate_time(dist) <= competitor.calculate_time(dist))
-		return true;
-	else
-		return false;
-}
 float Animal::calculate_time(float dist) //Placeholder; to be derived by subclasses
 {
 	return 0.0;

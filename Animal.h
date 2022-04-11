@@ -42,15 +42,12 @@ class Animal
 		void display(void);
 		bool is(Animal& other);
 
-        /* Animal::is_faster_than(Animal& competitor, float dist)
-         * PURPOSE:	returns whether this animal is faster than competitor
-		 * 	based on how their is_faster_than functions compute their
-		 * 	over distance dist; calculate_time derives behavior in subclasses.
-         * ARGS:    competitor, the animal to check performance against.
-         * RETURN:  bool whether this animal performed better than competitor
-		 * 	over distance dist.
-         */
-		bool is_faster_than(Animal& competitor, float dist);
+		/*Animal::calculate_time(float dist)
+		 * PURPOSE: Calculates how long it would take for an Animal object to
+		 * 	run a race of distance dist; behavior unimplemented in Animal superclass
+		 *	and derived differently for each subclass.
+		 */
+		float calculate_time(float dist);
 
 	private:
 		//TODO convert to char* name, priv funcs to convert from/to interface
@@ -58,11 +55,7 @@ class Animal
 		const string breed;				//set by derived classes
 		float min_speed;				//set by derived classes
 		float max_speed;				//set by derived classes
-		//TODO unsure of whether agility worth including
-		float min_agility;				//set by derived classes
-		float max_agility;				//set by derived classes
 
-		float calculate_time(float dist); //placeholder for use in is_faster_than
 };
 
 /* derived Animals */
@@ -72,7 +65,6 @@ class Cat: public Animal
 		Cat(void);
 		Cat(string new_name);
 		~Cat(void);
-	private:
 		float calculate_time(float dist);
 };
 		
@@ -82,7 +74,6 @@ class Tortoise: public Animal
 		Tortoise(void);
 		Tortoise(string new_name);
 		~Tortoise(void);
-	private:
 		float calculate_time(float dist);
 };
 		
@@ -92,6 +83,5 @@ class Hare: public Animal
 		Hare(void);
 		Hare(string new_name);
 		~Hare(void);
-	private:
 		float calculate_time(float dist);
 };
