@@ -27,7 +27,7 @@ Animal::~Animal(void)
 Animal::Animal(string newName)
 	: name(newName), breed("UNKNOWN") {}
 
-string Animal::get_name(void)
+string Animal::get_name(void) const
 {
 	return name;
 }
@@ -37,7 +37,7 @@ void Animal::set_name(string new_name)
 	name = new_name;
 }
 
-string Animal::get_breed(void)
+string Animal::get_breed(void) const
 {
 	return breed;
 }
@@ -56,6 +56,12 @@ bool Animal::is_faster_than(Animal& competitor, float dist)
 float Animal::calculate_time(float dist) //Placeholder; to be derived by subclasses
 {
 	return 0.0;
+}
+
+ostream& operator<<(ostream& os, const Animal& oa)
+{
+	os << "Name: " << oa.get_name() << ", breed: " << oa.get_breed() << '\n';
+	return os;
 }
 
 

@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include<iostream>
+
 /* class Node
  * Encapsulates some data and its neighbors in a list (next and prev).
  * Made to be used by CLL class template.
@@ -96,15 +98,15 @@ class CLL													//TODO
 {
 	public:
 		CLL(void)
-			: head(nullptr) {}
+			: head(nullptr), tail(nullptr) {}
 
 		~CLL(void) //delete all nodes if there are any
 		{
 			Node<T>* temp = head;
-			while(temp){
-				head = temp;
-				temp = head->next;
-				delete head;
+			while (temp->get_next() != head){
+				temp = head;
+				head = head->get_next();
+				delete temp;
 			}
 		}
 
@@ -116,25 +118,25 @@ class CLL													//TODO
          * ARGS:    new_data, the new data member to be wrapped in a node and inserted.
          * RETURN:  None.
          */
-		void insert(T& new_data)
+		void insert(T new_data)
 		{
-			/* CODE FOR NON-CIRCULAR DOUBLY LINKED WITHOUT TAIL, NEED TO CONVERT TODO
-
 			Node<T>* new_node = new Node<T>(new_data);
-			if (!head)
+			if (!head){
 				head = new_node;
+				}
 			else{
 				Node<T>* temp = head;
-				while (temp->get_next()){
+				while (temp != tail){
 					temp = temp->get_next();
 				}
 				temp->set_next(new_node);
 				new_node->set_prev(temp);
 			}
-
-			*/
+			tail = new_node; //always the case
+			head->set_prev(new_node);
+			new_node->set_next(head);
 		}
-
+		
 		bool is_empty(void)
 		{
 			return !head;
@@ -147,6 +149,17 @@ class CLL													//TODO
 
 		//would like to be able to lookup by string key,
 		//unsure of how w/ templating
+		/*
+		template<> T* lookup<Animal>(string key)
+		{
+			T* temp = head;
+			while (temp){
+				if (temp->get_name() == key)
+					return temp;
+			}
+			return nullptr;
+		}
+		*/
 
 		int size(void)
 		{
@@ -156,7 +169,12 @@ class CLL													//TODO
 
 		void display(void)
 		{
-			//TODO - not strictly necessary for asgmt1
+			Node<T>* temp = head;
+			while (temp->get_next() != head){
+				std::cout << temp->get_data() << '\n';
+				temp = temp->get_next();
+			}
+			std::cout << tail->get_data() << '\n';
 		}
 
 	private:

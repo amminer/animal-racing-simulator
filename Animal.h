@@ -16,6 +16,7 @@
 
 #include<string>	//name 
 #include<cstdlib>	//randomized stats
+#include<iostream>	//display
 using namespace std;
 
 /* base class for derived animals, should not be instantiated */
@@ -25,8 +26,13 @@ class Animal
 		Animal(void);
 		Animal(string name);
 		~Animal(void);
-		string get_name(void);
-		string get_breed(void); 
+		//TODO copy constructor, operator= when name is char*
+		//Animal(const Animal& src) = delete;
+		//const Animal& operator=(const Animal& rhs) = delete;
+		//TODO operator<<
+		friend ostream& operator<<(ostream& os, const Animal& oa);
+		string get_name(void) const;
+		string get_breed(void) const; 
 		void set_name(string new_name);
 		void set_breed(string new_breed);
 		void display(void);
