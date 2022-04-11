@@ -5,11 +5,12 @@
  */
 #include <iostream>
 #include "CLL.h"
+#include "Animal.h"
 using namespace std;
 
 int main(void)
 {
-	//testing int
+	/* TODO
 	Node<int> x;
 	x.set_data(2);
 	Node<int> y(12);
@@ -28,4 +29,5 @@ int main(void)
 		cout << temp->get_data() << '\n';
 		temp = temp->get_next();
 	}
+	*/
 }

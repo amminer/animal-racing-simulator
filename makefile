@@ -1,6 +1,6 @@
 CFLAGS=     -g -Wall -std=c++17
 VFLAGS=		--leak-check=full
-SOURCES=	asgmt1.cpp Animal.cpp
+SOURCES=	test_animal_node.cpp Animal.cpp
 EXE=     	./main.out
 CC=			g++
 

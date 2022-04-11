@@ -1,19 +1,33 @@
+/* Amelia Miner
+ * 04/09/22
+ * cs 202 section 003
+ * program #: 1
+ * file: Animal.cpp
+ * PURPOSE: Represent an Animal to be raced. Contains a base class Animal
+ *  which is not meant to be instantiated, and several derived classes
+ *  which are. Animals are mainly passed the parameters of the race to which
+ *  they belong as well as another animal against which they are competing
+ * 	in order to compute their performance against one another.
+ *  The containing Race object tracks the result of each comparison
+ * 	amongst its competitors and determines the winner and runner up.
+ */
+
 #include"Animal.h"
 
-Animal::Animal()
+/*					BASE CLASS - DO NOT INSTANTIATE					*/
+Animal::Animal(void)
 	: name("UNKNOWN"), breed("UNKNOWN") 
 {}
 
-Animal::~Animal()
+Animal::~Animal(void)
 {
 	//TODO when name is char*
 }
 
-
 Animal::Animal(string newName)
 	: name(newName), breed("UNKNOWN") {}
 
-string Animal::get_name()
+string Animal::get_name(void)
 {
 	return name;
 }
@@ -23,18 +37,28 @@ void Animal::set_name(string new_name)
 	name = new_name;
 }
 
-string Animal::get_breed()
+string Animal::get_breed(void)
 {
 	return breed;
 }
 
-void Animal::set_breed(string new_breed)
+void Animal::display(void) //TODO
 {
-	breed = new_breed;
 }
 
-//bool Animal::is_faster_than(Animal& competitor, float dist)
-//defined in derived classes
+bool Animal::is_faster_than(Animal& competitor, float dist)
+{
+	if (this->calculate_time(dist) <= competitor.calculate_time(dist))
+		return true;
+	else
+		return false;
+}
+float Animal::calculate_time(float dist) //Placeholder; to be derived by subclasses
+{
+	return 0.0;
+}
 
-//float Animal::calculate_time(float dist)
-//defined in derived classes
+
+/*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
+
+//TODO

@@ -2,17 +2,14 @@
  * 04/10/22
  * cs 202 section 003
  * program #: 1
- * file: asgmt1.cpp
- * PURPOSE: Main function, display state to/take input from user
  */
 #include "Race.h"
 #include "Animal.h"
-#include "LL.h"
+#include "CLL.h"
 #include <iostream>
 
 int main(void)
 {
-	//testing Animal
 	Node<Animal> x;
 	x.set_data(Animal("billy"));
 	Node<Animal> y = Animal("bob");

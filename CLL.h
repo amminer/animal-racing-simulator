@@ -12,13 +12,13 @@
 
 /* class Node
  * Encapsulates some data and its neighbors in a list (next and prev).
- * Made to be used by LinkedList class template.
+ * Made to be used by CLL class template.
  */
 template<typename T>
 class Node
 {
 	public:
-		Node()
+		Node(void)
 			: prev(nullptr), next(nullptr), data(nullptr) {};
 
 		Node(T new_data)
@@ -47,18 +47,18 @@ class Node
 			}
 		}
 
-		~Node()
+		~Node(void)
 		{
 			if (data)
 				delete data;
 		}
 
-		Node* get_next()
+		Node* get_next(void)
 		{
 			return next;
 		}
 
-		Node* get_prev()
+		Node* get_prev(void)
 		{
 			return prev;
 		}
@@ -75,12 +75,12 @@ class Node
 			return;
 		}
 
-		T get_data()
+		T get_data(void)
 		{
 			return *data;
 		}
 
-		T* get_data_ptr()
+		T* get_data_ptr(void)
 		{
 			return data;
 		}
@@ -92,14 +92,13 @@ class Node
 };
 
 template<typename T>
-class LinkedList
+class CLL													//TODO
 {
 	public:
-		LinkedList()
-		{
-			head = nullptr;
-		}
-		~LinkedList()
+		CLL(void)
+			: head(nullptr) {}
+
+		~CLL(void) //delete all nodes if there are any
 		{
 			Node<T>* temp = head;
 			while(temp){
@@ -108,12 +107,20 @@ class LinkedList
 				delete head;
 			}
 		}
-		LinkedList(const LinkedList& src) = delete;
-		const LinkedList& operator=(const LinkedList& rhs) = delete;
 
+		CLL(const CLL& src) = delete;
+		const CLL& operator=(const CLL& rhs) = delete;
+
+        /* CLL::insert(T& new_data)
+         * PURPOSE:	insert a new node at the "tail" of the linkedlist, before head and after tail.
+         * ARGS:    new_data, the new data member to be wrapped in a node and inserted.
+         * RETURN:  None.
+         */
 		void insert(T& new_data)
 		{
-			Node<T>* new_node {new_data};
+			/* CODE FOR NON-CIRCULAR DOUBLY LINKED WITHOUT TAIL, NEED TO CONVERT TODO
+
+			Node<T>* new_node = new Node<T>(new_data);
 			if (!head)
 				head = new_node;
 			else{
@@ -124,13 +131,35 @@ class LinkedList
 				temp->set_next(new_node);
 				new_node->set_prev(temp);
 			}
+
+			*/
 		}
 
-		bool is_empty()
+		bool is_empty(void)
 		{
 			return !head;
 		}
 
+		void remove(int index) 	//Would like to be able to remove by string key,
+		{					  	//unsure of how w/ templating
+			//TODO - not strictly necessary for asgmt1
+		}
+
+		//would like to be able to lookup by string key,
+		//unsure of how w/ templating
+
+		int size(void)
+		{
+			//TODO - not strictly necessary for asgmt1
+			return 0;
+		}
+
+		void display(void)
+		{
+			//TODO - not strictly necessary for asgmt1
+		}
+
 	private:
 		Node<T>* head;
+		Node<T>* tail;
 };
