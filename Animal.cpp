@@ -16,16 +16,22 @@
 
 /*					BASE CLASS - DO NOT INSTANTIATE					*/
 Animal::Animal(void)
-	: name("UNKNOWN"), breed("UNKNOWN") 
+	: name("UNKNOWN"), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
+	  predator(false), prey(false), size_bracket(0)
 {}
+
+Animal::Animal(string new_name) //temp? for testing TODO
+	: name(new_name), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
+	  predator(false), prey(false), size_bracket(0) {}
+
+Animal::Animal(string new_name, string new_breed) //temp? for testing TODO
+	: name(new_name), breed(new_breed), min_speed(0.0), max_speed(0.0), speed(0.0),
+	  predator(false), prey(false), size_bracket(0) {}
 
 Animal::~Animal(void)
 {
 	//TODO when name is char*
 }
-
-Animal::Animal(string newName)
-	: name(newName), breed("UNKNOWN") {}
 
 bool Animal::operator==(const Animal& other)
 {
@@ -48,6 +54,11 @@ void Animal::set_name(string new_name)
 string Animal::get_breed(void) const
 {
 	return breed;
+}
+
+int Animal::get_size_bracket(void)
+{
+	return size_bracket.size_int;
 }
 
 void Animal::display(void) //TODO

@@ -16,6 +16,11 @@
 
 #pragma once
 
+#include<utility>
+#include<vector>
+#include "CLL.h"
+#include "Animal.h"
+
 /* class Race
  * See header comment
  * Only to be instantiated in main driver code
@@ -25,7 +30,7 @@ class Race{
     public:
 		Race(void);
 		~Race(void);
-		Race(vector<Animal>);
+		Race(vector<Animal> new_roster, int new_dist);
 		Race(const Race& other) = delete;
 		Race& operator=(const Race& rhs) = delete;
 
@@ -33,16 +38,19 @@ class Race{
 		void stop(void);				//reports the results of start().
 		void separate_lanes(void);		//sets lane_separators_raised to true.
 		void unseparate_lanes(void);	//sets lane_separators to true.
-		void remove_prey(void);
+		void remove_prey(void);			//if there is a predator, removes all smaller prey
 
-        /* foos::bar(args)
+        /* foos::bar(args) TODO document race funcs
          * PURPOSE: x (what it does - how goes in .cpp)
          * ARGS:    y
          * RETURN:  z
          */
-        void bar();
+        //void bar();
 
     private:
-		Animal* winners[2]; //contains ptrs to the first and second place animals
-		void display(display); //called from start to display contestants
+		Animal* winners[2]; //contains ptrs to the first and second place animals.
+		vector<pair<Animal*, double>> roster; //Holds ptr to each animal and its time.
+		void display(void); //called from start to display contestants.
+		bool separators_raised; //used to determine whether predators can hunt.
+		const float distance; //unsure if should be const?
 };

@@ -3,6 +3,7 @@
  * cs 202 section 003
  * program #: 1
  */
+#include "Race.h"
 #include "Animal.h"
 #include "CLL.h"
 #include <iostream>

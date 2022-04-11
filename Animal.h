@@ -28,6 +28,7 @@ class Animal
 	public:
 		Animal(void);
 		Animal(string name);
+		Animal(string name, string breed);
 		~Animal(void);
 		//TODO copy constructor, operator= when name is char*
 		//Animal(const Animal& src) = delete;
@@ -39,6 +40,7 @@ class Animal
 		string get_breed(void) const; 
 		void set_name(string new_name);
 		void set_breed(string new_breed);
+		int get_size_bracket(void);
 		void display(void);
 		bool is(Animal& other);
 
@@ -51,18 +53,39 @@ class Animal
 
 	private:
 		//TODO convert to char* name, priv funcs to convert from/to interface
-		string name;
-		const string breed;				//set by derived classes
-		float min_speed;				//set by derived classes
-		float max_speed;				//set by derived classes
+		string name;					//set PER-INSTANCE of subclasses by user.
+		const string breed;				//set by derived classes.
+		const float min_speed;			//set by derived classes.
+		const float max_speed;			//set by derived classes.
+		const float speed;				//set PER-INSTANCE of subclasses based on min, max.
+		const bool predator;			//set by derived classes.
+		const bool prey;				//set by derived classes.
+		struct size_brackets
+		{
+			int size_int;
+			size_brackets()
+			{
+				size_int = -1; //debug, should never be used with this value
+			}
 
+			size_brackets(int new_size)
+			{
+				if (new_size <= 0)
+					size_int = 0;
+				else if (new_size >= 9)
+					size_int = 9;
+				else
+					size_int = new_size;
+			}
+		};
+		const size_brackets size_bracket; //set by derived classes; int with min 0, max 9.
 };
+
 
 /* derived Animals */
 class Cat: public Animal
 {
 	public:
-		Cat(void);
 		Cat(string new_name);
 		~Cat(void);
 		float calculate_time(float dist);
@@ -71,7 +94,6 @@ class Cat: public Animal
 class Tortoise: public Animal
 {
 	public:
-		Tortoise(void);
 		Tortoise(string new_name);
 		~Tortoise(void);
 		float calculate_time(float dist);
@@ -80,7 +102,6 @@ class Tortoise: public Animal
 class Hare: public Animal
 {
 	public:
-		Hare(void);
 		Hare(string new_name);
 		~Hare(void);
 		float calculate_time(float dist);
