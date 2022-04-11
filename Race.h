@@ -35,7 +35,7 @@ class Race{
 		Race& operator=(const Race& rhs) = delete;
 
 		void start(void);				//calculates the performance of animals in roster.
-		void stop(void);				//reports the results of start().
+		vector<Animal*> stop(void);		//prints results, returns dead animals for Stable.
 		void separate_lanes(void);		//sets lane_separators_raised to true.
 		void unseparate_lanes(void);	//sets lane_separators to true.
 		void remove_prey(void);			//if there is a predator, removes all smaller prey

@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include "LLL.h"
+
 /* class Stable
  * See header comment.
  * Only to be used in main driver code, instantiated once at startup

@@ -20,6 +20,7 @@
 #include<string>	//name 
 #include<cstdlib>	//randomized stats
 #include<iostream>	//display
+#include<stdexcept> //bounds check on size_bracket
 using namespace std;
 
 /* base class for derived animals, should not be instantiated */
@@ -63,13 +64,17 @@ class Animal
 		struct size_brackets
 		{
 			int size_int;
-			size_brackets()
-			{
-				size_int = -1; //debug, should never be used with this value
-			}
+			size_brackets(void) : size_int(-1) {}
 
 			size_brackets(int new_size)
 			{
+				/* don't want to do it this way unless I can report the
+					traceback which I don't know how to do. TODO
+				if (new_size < 0 or new_size > 9)
+					throw overflow_error("Animal initialized with bad size value!\n");
+				else
+					size_int = new_size;
+				*/
 				if (new_size <= 0)
 					size_int = 0;
 				else if (new_size >= 9)
@@ -78,7 +83,8 @@ class Animal
 					size_int = new_size;
 			}
 		};
-		const size_brackets size_bracket; //set by derived classes; int with min 0, max 9.
+		//set by derived classes; int with min 0, max 9.
+		const size_brackets size_bracket;
 };
 
 

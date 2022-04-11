@@ -2,23 +2,27 @@
  * 04/09/22
  * cs 202 section 003
  * program #: 1
- * file: CLL.h
- * PURPOSE: circular doubly linked list class template
- * and node class template.
+ * file: LLL.h
+ * PURPOSE: linear doubly linked list class template TODO - currently just a copy of CLL
  */
 
 #pragma once
 
 #include "Node.h"
+#include "CLL.h"
 
+/* class Node
+ * Encapsulates some data and its neighbors in a list (next and prev).
+ * Made to be used by LLL class template.
+ */
 template<typename T>
-class CLL													//TODO
+class LLL: public CLL<T>
 {
 	public:
-		CLL(void)
+		LLL(void)
 			: head(nullptr), tail(nullptr) {}
 
-		~CLL(void)
+		~LLL(void)
 		{
 			if (head)
 				remove_all(head);
@@ -30,8 +34,8 @@ class CLL													//TODO
 			delete to_delete;
 		}
 
-		CLL(const CLL& src) = delete;
-		const CLL& operator=(const CLL& rhs) = delete;
+		LLL(const LLL& src) = delete;
+		const LLL& operator=(const LLL& rhs) = delete;
 
 		// More legible and public alternative to (bool) !head
 		bool is_empty(void)
@@ -39,7 +43,7 @@ class CLL													//TODO
 			return !head;
 		}
 
-        /* CLL::push_back(T& new_data)
+        /* LLL::push_back(T& new_data)
          * PURPOSE:	insert a new node at the tail of the linkedlist,
          * ARGS:    new_data, data to be wrapped in a node and inserted.
          * RETURN:  None.
