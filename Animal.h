@@ -10,6 +10,9 @@
  * 	in order to compute their performance against one another.
  *  The containing Race object tracks the result of each comparison
  * 	amongst its competitors and determines the winner and runner up.
+ * 						!!ATTENTION!!
+ *	overloads Animal == Animal operator to compare names instead of literal
+ *	object identity - to compare identity, use Animal::is(Animal&).
  */
 
 #pragma once
@@ -37,6 +40,7 @@ class Animal
 		void set_name(string new_name);
 		void set_breed(string new_breed);
 		void display(void);
+		bool is(Animal& other);
 
         /* Animal::is_faster_than(Animal& competitor, float dist)
          * PURPOSE:	returns whether this animal is faster than competitor

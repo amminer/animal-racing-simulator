@@ -2,10 +2,9 @@
  * 04/09/22
  * cs 202 section 003
  * program #: 1
- * file: LL.h
- * PURPOSE: linear doubly linked list class template
- * and node class template. Used as parent of CLL,
- * used as elements of stable array in main function.
+ * file: CLL.h
+ * PURPOSE: circular doubly linked list class template
+ * and node class template.
  */
 
 #pragma once

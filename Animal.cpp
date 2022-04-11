@@ -54,6 +54,11 @@ void Animal::display(void) //TODO
 {
 }
 
+bool Animal::is(Animal& other)
+{
+	return this == &other;
+}
+
 bool Animal::is_faster_than(Animal& competitor, float dist)
 {
 	if (this->calculate_time(dist) <= competitor.calculate_time(dist))
