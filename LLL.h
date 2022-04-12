@@ -3,20 +3,15 @@
  * cs 202 section 003
  * program #: 1
  * file: LLL.h
- * PURPOSE: linear doubly linked list class template TODO - currently just a copy of CLL
+ * PURPOSE: linear doubly linked list class template.
  */
 
 #pragma once
 
 #include "Node.h"
-#include "CLL.h"
 
-/* class Node
- * Encapsulates some data and its neighbors in a list (next and prev).
- * Made to be used by LLL class template.
- */
 template<typename T>
-class LLL: public CLL<T>
+class LLL
 {
 	public:
 		LLL(void)
@@ -29,7 +24,7 @@ class LLL: public CLL<T>
 		}
 		void remove_all(Node<T>* to_delete)
 		{
-			if (to_delete->get_next() != head)
+			if (to_delete != tail)
 				remove_all(to_delete->get_next());
 			delete to_delete;
 		}
@@ -51,11 +46,11 @@ class LLL: public CLL<T>
 		void push_back(T new_data)
 		{
 			Node<T>* new_node = new Node<T>(new_data);
+			Node<T>* temp = head;
 			if (!head){
 				head = new_node;
 				}
 			else{
-				Node<T>* temp = head;
 				while (temp != tail){
 					temp = temp->get_next();
 				}
@@ -63,8 +58,6 @@ class LLL: public CLL<T>
 				new_node->set_prev(temp);
 			}
 			tail = new_node; //always the case
-			head->set_prev(new_node);
-			new_node->set_next(head);
 		}
 
 		void push_front(T new_data)
@@ -93,7 +86,7 @@ class LLL: public CLL<T>
 		{
 			if (list->get_data() == key)
 				return list;
-			else if (list->get_next() != head)
+			else if (list != tail)
 				return find_node(list->get_next(), key);
 			else
 				return nullptr;
@@ -119,8 +112,6 @@ class LLL: public CLL<T>
 			//TODO - not strictly necessary for asgmt1
 		}
 
-	
-
 		int size(void)
 		{
 			//TODO - not strictly necessary for asgmt1
@@ -130,7 +121,7 @@ class LLL: public CLL<T>
 		void display(void)
 		{
 			Node<T>* temp = head;
-			while (temp->get_next() != head){
+			while (temp != tail){
 				std::cout << temp->get_data() << '\n';
 				temp = temp->get_next();
 			}

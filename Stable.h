@@ -1,11 +1,15 @@
 /* Amelia Miner
  * 04/11/22
  * CS 202 section 003
- * PROGRAM #: #
+ * PROGRAM #: 1
  * FILE: Stable.h
- * PURPOSE: Main purpose is to contain an array of linkedlists, which will store animals
- * 	whose object lifetimes will be from when they are created until they are manually deleted
- * 	by the user or until the program quits and the Stable object is destroyed.
+ * PURPOSE: Main purpose is to contain an array of linkedlists, which will
+ *	store animals whose object lifetimes will be from when they are created
+ *	until they are manually deleted by the user, removed during a race, or
+ *	until the program quits and the Stable object is destroyed.
+ *		Stable should check for name uniqueness to prevent user from adding
+ *	duplicate names, which could cause obvious problems when the user looks
+ *	up some animal by name later on.
  *		May also implement functionality between this class and Animal to breed new animals with
  *	stats based on their parents.
  */

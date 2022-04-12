@@ -30,7 +30,7 @@ class Animal
 		Animal(void);
 		Animal(string name);
 		Animal(string name, string breed);
-		~Animal(void);
+		virtual ~Animal(void);
 		//TODO copy constructor, operator= when name is char*
 		//Animal(const Animal& src) = delete;
 		//const Animal& operator=(const Animal& rhs) = delete;
@@ -50,7 +50,9 @@ class Animal
 		 * 	run a race of distance dist; behavior unimplemented in Animal superclass
 		 *	and derived differently for each subclass.
 		 */
-		float calculate_time(float dist);
+		virtual float calculate_time(float dist);
+
+		//float calculate_dist(float time); //May want to allow for time-based races
 
 	private:
 		//TODO convert to char* name, priv funcs to convert from/to interface

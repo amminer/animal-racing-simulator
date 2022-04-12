@@ -3,8 +3,7 @@
  * cs 202 section 003
  * program #: 1
  * file: CLL.h
- * PURPOSE: circular doubly linked list class template
- * and node class template.
+ * PURPOSE: circular doubly linked list class template.
  */
 
 #pragma once
@@ -12,7 +11,7 @@
 #include "Node.h"
 
 template<typename T>
-class CLL													//TODO
+class CLL
 {
 	public:
 		CLL(void)
@@ -25,7 +24,7 @@ class CLL													//TODO
 		}
 		void remove_all(Node<T>* to_delete)
 		{
-			if (to_delete->get_next() != head)
+			if (to_delete != tail)
 				remove_all(to_delete->get_next());
 			delete to_delete;
 		}
@@ -47,11 +46,11 @@ class CLL													//TODO
 		void push_back(T new_data)
 		{
 			Node<T>* new_node = new Node<T>(new_data);
+			Node<T>* temp = head;
 			if (!head){
 				head = new_node;
 				}
 			else{
-				Node<T>* temp = head;
 				while (temp != tail){
 					temp = temp->get_next();
 				}
@@ -89,7 +88,7 @@ class CLL													//TODO
 		{
 			if (list->get_data() == key)
 				return list;
-			else if (list->get_next() != head)
+			else if (list != tail)
 				return find_node(list->get_next(), key);
 			else
 				return nullptr;
@@ -115,8 +114,6 @@ class CLL													//TODO
 			//TODO - not strictly necessary for asgmt1
 		}
 
-	
-
 		int size(void)
 		{
 			//TODO - not strictly necessary for asgmt1
@@ -126,7 +123,7 @@ class CLL													//TODO
 		void display(void)
 		{
 			Node<T>* temp = head;
-			while (temp->get_next() != head){
+			while (temp != tail){
 				std::cout << temp->get_data() << '\n';
 				temp = temp->get_next();
 			}
