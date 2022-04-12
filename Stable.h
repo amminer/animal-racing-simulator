@@ -35,6 +35,7 @@ class Stable{
 		bool is_empty(void);
 		bool add_animal(Animal& new_animal); //returns whether success (no dup names)
 		Animal* find_animal(string find_name);
+		Animal* get_animal_at(int row, int col);
 		bool remove_animal(Animal); //returns whether success
 		int size(void);
 		void display_breeds(void);	//allows user to select a breed by index
