@@ -11,6 +11,8 @@
  * 		Animals are raced by calculating their performance and removing prey animals.
  *	Predatory animals larger than any prey animals will remove those prey animals
  *	from the race if separators are not set to raised.
+ * 		May allow option to base race length on a time instead of distance - base race
+ *	with derived time_race and dist_race?
  * 		May also add functionality between Race and Animal to give Animals an age
  *	based on the number of races they have run with increasing chance to have
  *	to retire with each additional race.
@@ -24,9 +26,8 @@
 #include "Animal.h"
 
 /* class Race
- * See header comment
- * Only to be instantiated in main driver code
- * 	when user chooses to set up a race
+ * See header comment;
+ * Only to be instantiated inside class Stadium.
  */
 class Race{
     public:
@@ -36,23 +37,17 @@ class Race{
 		Race(const Race& other) = delete;
 		Race& operator=(const Race& rhs) = delete;
 
-		bool start(void);				//calculates the performance of animals in roster.
-		vector<Animal*> stop(void);		//prints results, returns removed animals for Stable.
-		void separate_lanes(void);		//sets lane_separators_raised to true.
-		void unseparate_lanes(void);	//sets lane_separators to true.
-		void remove_prey(void);			//if there is a predator, removes all smaller prey
-
-        /* foos::bar(args) TODO document race funcs
-         * PURPOSE: x (what it does - how goes in .cpp)
-         * ARGS:    y
-         * RETURN:  z
-         */
-        //void bar();
+		bool start(void);			//calculates the performance of animals in roster.
+		vector<Animal*> stop(void);	//prints results, returns removed animals.
+		void separate_lanes(void);	//sets lane_separators_raised to true.
+		void unseparate_lanes(void);//sets lane_separators to true.
+		//if there is a predator, removes at most one smaller prey, closest first.
+		void remove_prey(void);
 
     private:
 		Animal* winners[2]; //contains ptrs to the first and second place animals.
 		vector<pair<Animal*, double>> roster; //Holds ptr to each animal and its time.
-		void display(void); //called from start to display contestants.
-		bool separators_raised; //used to determine whether predators can hunt.
-		const float distance; //unsure if should be const?
+		const void display(void); //called from start to display contestants.
+		const bool separators_raised; //used to determine whether predators can hunt.
+		const float distance;
 };

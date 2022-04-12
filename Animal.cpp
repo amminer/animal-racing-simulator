@@ -81,7 +81,6 @@ ostream& operator<<(ostream& os, const Animal& oa)
 	return os;
 }
 
-
 /*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
 
 //TODO

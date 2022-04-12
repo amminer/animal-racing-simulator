@@ -70,6 +70,11 @@ class Animal
 
 			size_brackets(int new_size)
 			{
+				set_size(new_size);
+			}
+			private:
+			set_size(int new_size)
+			{
 				/* don't want to do it this way unless I can report the
 					traceback which I don't know how to do. TODO
 				if (new_size < 0 or new_size > 9)
