@@ -1,15 +1,17 @@
 /* Amelia Miner
  * 04/11/22
- * cs 202 section 003
- * program #: 1
- * file: Race.h
+ * CS 202 section 003
+ * PROGRAM #: 1
+ * FILE: Race.h
  * PURPOSE: Represents a competition between an arbitrary set of animals;
- * 	minimum of 2 animals checked by start function;
- *  animals stored in a dynamically allocated array of linkedlists, where
+ * 	minimum of 2 animals checked by start function.
+ *  Animals stored in a dynamically allocated array of linkedlists, where
  * 	each breed has a row in the array and each animal of that breed is stored
  * 	in a node of that array row/linkedlist.
- * 	Animals are raced against each other one at a time
- * 	May also add functionality between Race and Animal to give Animals an age
+ * 		Animals are raced by calculating their performance and removing prey animals.
+ *	Predatory animals larger than any prey animals will remove those prey animals
+ *	from the race if separators are not set to raised.
+ * 		May also add functionality between Race and Animal to give Animals an age
  *	based on the number of races they have run with increasing chance to have
  *	to retire with each additional race.
  */
@@ -34,8 +36,8 @@ class Race{
 		Race(const Race& other) = delete;
 		Race& operator=(const Race& rhs) = delete;
 
-		void start(void);				//calculates the performance of animals in roster.
-		vector<Animal*> stop(void);		//prints results, returns dead animals for Stable.
+		bool start(void);				//calculates the performance of animals in roster.
+		vector<Animal*> stop(void);		//prints results, returns removed animals for Stable.
 		void separate_lanes(void);		//sets lane_separators_raised to true.
 		void unseparate_lanes(void);	//sets lane_separators to true.
 		void remove_prey(void);			//if there is a predator, removes all smaller prey
