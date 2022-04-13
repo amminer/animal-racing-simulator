@@ -1,0 +1,7 @@
+Write an Animal::predates(Animal&) func
+
+write remove_node funcs for lists
+
+ensure all classes with dyn mem (Animal&subs, lists, nodes) can deep copy (or delete copy constr)
+
+ensure all =operators return a reference to their object (&this)

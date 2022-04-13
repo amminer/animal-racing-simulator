@@ -22,7 +22,7 @@ class LLL
 			if (head)
 				remove_all(head);
 		}
-		void remove_all(Node<T>* to_delete)
+		void remove_all(Node<T>& to_delete)
 		{
 			if (to_delete != tail)
 				remove_all(to_delete->get_next());
@@ -43,7 +43,7 @@ class LLL
          * ARGS:    new_data, data to be wrapped in a node and inserted.
          * RETURN:  None.
          */
-		void push_back(T new_data)
+		void push_back(T& new_data)
 		{
 			Node<T>* new_node = new Node<T>(new_data);
 			Node<T>* temp = head;
@@ -60,17 +60,17 @@ class LLL
 			tail = new_node; //always the case
 		}
 
-		void push_front(T new_data)
+		void push_front(T& new_data)
 		{
 			//TODO - not strictly necessary for asgmt1
 		}
 
-		void insert_at(T new_data, int position)
+		void insert_at(T& new_data, int position)
 		{
 			//TODO - not strictly necessary for asgmt1
 		}
 
-		T* lookup(T key) //must not use reference to accept rvalue arg
+		T& lookup(T& key) //must not use reference to accept rvalue arg
 		{
 			Node<T>* ret_node = nullptr;
 			T* ret = nullptr;
@@ -82,12 +82,12 @@ class LLL
 			}
 			return ret;
 		}
-		Node<T>* find_node(Node<T>* list, T key) //must accept rvalue arg
+		Node<T>& find_node(Node<T>& list, T key) //must accept rvalue arg
 		{
-			if (list->get_data() == key)
+			if (&list->get_data() == key)
 				return list;
-			else if (list != tail)
-				return find_node(list->get_next(), key);
+			else if (&list != tail)
+				return find_node(*list->get_next(), key);
 			else
 				return nullptr;
 		}

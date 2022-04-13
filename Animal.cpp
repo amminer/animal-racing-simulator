@@ -16,21 +16,28 @@
 
 /*					BASE CLASS - DO NOT INSTANTIATE					*/
 Animal::Animal(void)
-	: name("UNKNOWN"), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
+	: name((char*)"UNKNOWN"), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
 	  predator(false), prey(false), size_bracket(0)
 {}
 
 Animal::Animal(string new_name) //temp? for testing TODO
-	: name(new_name), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
-	  predator(false), prey(false), size_bracket(0) {}
+	: breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
+	  predator(false), prey(false), size_bracket(0)
+{
+	set_name(new_name);
+}
 
 Animal::Animal(string new_name, string new_breed) //temp? for testing TODO
-	: name(new_name), breed(new_breed), min_speed(0.0), max_speed(0.0), speed(0.0),
-	  predator(false), prey(false), size_bracket(0) {}
+	: breed(new_breed), min_speed(0.0), max_speed(0.0), speed(0.0),
+	  predator(false), prey(false), size_bracket(0)
+{
+	set_name(new_name);
+}
 
 Animal::~Animal(void)
 {
-	//TODO when name is char*
+	if (name)
+		delete name;
 }
 
 bool Animal::operator==(const Animal& other)
@@ -41,14 +48,25 @@ bool Animal::operator==(const Animal& other)
 		return false;
 }
 
+ostream& operator<<(ostream& os, const Animal& oa)
+{
+	os << "Name: " << oa.get_name() << ", breed: " << oa.get_breed() << '\n';
+	return os;
+}
+
 string Animal::get_name(void) const
 {
-	return name;
+	
+	return string(name);
 }
 
 void Animal::set_name(string new_name)
 {
-	name = new_name;
+	if (name){
+		delete name;
+		name = new char[new_name.length() + 1];
+	}
+	strcpy(name, new_name.c_str());
 }
 
 string Animal::get_breed(void) const
@@ -56,31 +74,40 @@ string Animal::get_breed(void) const
 	return breed;
 }
 
-int Animal::get_size_bracket(void)
+void Animal::display(void) //necessary/useful?
 {
-	return size_bracket.size_int;
-}
-
-void Animal::display(void) //TODO
-{
+	cout << *this;
 }
 
 bool Animal::is(Animal& other)
 {
-	return this == &other;
+	return this == &other; //compares pointers
 }
 
-float Animal::calculate_time(float dist) //Placeholder; to be derived by subclasses
+/*Animal::predates(Animal& other)
+ * Makes use of animal::size_bracket::size_int, predator, and prey members
+ */
+bool Animal::predates(Animal& other)
+{
+	bool ret {false};
+	//take into account size, prey, and predator status //TODO
+	return ret;
+}
+
+/*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
+//TODO
+
+float Cat::calculate_time(int dist) //TODO
 {
 	return 0.0;
 }
 
-ostream& operator<<(ostream& os, const Animal& oa)
+float Tortoise::calculate_time(int dist) //TODO
 {
-	os << "Name: " << oa.get_name() << ", breed: " << oa.get_breed() << '\n';
-	return os;
+	return 0.0;
 }
 
-/*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
-
-//TODO
+float Hare::calculate_time(int dist) //TODO
+{
+	return 0.0;
+}

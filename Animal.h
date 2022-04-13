@@ -19,6 +19,7 @@
 
 #include<string>	//name 
 #include<cstdlib>	//randomized stats
+#include<cstring>
 #include<iostream>	//display
 #include<stdexcept> //bounds check on size_bracket
 using namespace std;
@@ -30,10 +31,9 @@ class Animal
 		Animal(void);
 		Animal(string name);
 		Animal(string name, string breed);
-		virtual ~Animal(void);
-		//TODO copy constructor, operator= when name is char*
-		//Animal(const Animal& src) = delete;
-		//const Animal& operator=(const Animal& rhs) = delete;
+		~Animal(void);
+		Animal(const Animal& src);
+		const Animal& operator=(const Animal& rhs);
 		friend ostream& operator<<(ostream& os, const Animal& oa);
 		bool operator==(const Animal& other);
 
@@ -41,29 +41,25 @@ class Animal
 		string get_breed(void) const; 
 		void set_name(string new_name);
 		void set_breed(string new_breed);
-		int get_size_bracket(void);
 		void display(void);
 		bool is(Animal& other);
 
 		/*Animal::calculate_time(float dist)
-		 * PURPOSE: Calculates how long it would take for an Animal object to
+		 * Calculates how long it would take for an Animal object to
 		 * 	run a race of distance dist; behavior unimplemented in Animal superclass
 		 *	and derived differently for each subclass.
 		 */
-		virtual float calculate_time(float dist);
+		virtual float calculate_time(int dist) = 0;
+		//virtual float calculate_dist(float time); //May want to allow for time-based races
 
-		//float calculate_dist(float time); //May want to allow for time-based races
+		/*Animal::predates(Animal& other)
+		 * Returns whether this animal can predate upon other;
+		 * Makes use of animal::size_bracket::size_int, predator, and prey members
+		 */
+		bool predates(Animal& other);
 
 	private:
-		//TODO convert to char* name, priv funcs to convert from/to interface
-		string name;					//set PER-INSTANCE of subclasses by user.
-		const string breed;				//set by derived classes.
-		const float min_speed;			//set by derived classes.
-		const float max_speed;			//set by derived classes.
-		const float speed;				//set PER-INSTANCE of subclasses based on min, max.
-		const bool predator;			//set by derived classes.
-		const bool prey;				//set by derived classes.
-		struct size_brackets
+		struct size_brackets //put this in its own .h or .h/.cpp?
 		{
 			int size_int;
 			size_brackets(void) : size_int(-1) {}
@@ -73,7 +69,7 @@ class Animal
 				set_size(new_size);
 			}
 			private:
-			set_size(int new_size)
+			void set_size(int new_size)
 			{
 				/* don't want to do it this way unless I can report the
 					traceback which I don't know how to do. TODO
@@ -90,6 +86,13 @@ class Animal
 					size_int = new_size;
 			}
 		};
+		char* name;						//set PER-INSTANCE of subclasses by user.
+		const string breed;				//set by derived classes.
+		const float min_speed;			//set by derived classes.
+		const float max_speed;			//set by derived classes.
+		const float speed;				//set PER-INSTANCE of subclasses based on min, max.
+		const bool predator;			//set by derived classes.
+		const bool prey;				//set by derived classes.
 		//set by derived classes; int with min 0, max 9.
 		const size_brackets size_bracket;
 };
@@ -101,7 +104,7 @@ class Cat: public Animal
 	public:
 		Cat(string new_name);
 		~Cat(void);
-		float calculate_time(float dist);
+		float calculate_time(int dist); //TODO
 };
 		
 class Tortoise: public Animal
@@ -109,7 +112,7 @@ class Tortoise: public Animal
 	public:
 		Tortoise(string new_name);
 		~Tortoise(void);
-		float calculate_time(float dist);
+		float calculate_time(int dist); //TODO
 };
 		
 class Hare: public Animal
@@ -117,5 +120,5 @@ class Hare: public Animal
 	public:
 		Hare(string new_name);
 		~Hare(void);
-		float calculate_time(float dist);
+		float calculate_time(int dist); //TODO
 };

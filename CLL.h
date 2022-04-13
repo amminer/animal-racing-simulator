@@ -26,7 +26,7 @@ class CLL
 		{
 			if (to_delete != tail)
 				remove_all(to_delete->get_next());
-			delete to_delete;
+			delete to_delete; //can this be made tail recursive? TODO
 		}
 
 		CLL(const CLL& src) = delete;

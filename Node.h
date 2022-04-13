@@ -36,11 +36,12 @@ class Node
 		{
 			this = src;
 		}
-		Node* operator=(const Node& rhs)
+		Node& operator=(const Node& rhs)
 		{
 			if (this != &rhs){
 				set_data(rhs->get_data());
 			}
+			return &this; //in case of chained assignments
 		}
 
 		~Node(void)

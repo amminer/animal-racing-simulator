@@ -7,7 +7,9 @@
 
 int main(void)
 {
-	Animal animal();
+	Cat cat();
+	Hare hare();
+	Tortoise tortoise();
 	LLL<Animal> lll();
 	CLL<Animal*> cll();
 	Race race();
