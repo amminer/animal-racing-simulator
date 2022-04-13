@@ -8,6 +8,7 @@
 #include "CLL.h"
 #include "LLL.h"
 #include <iostream>
+#include <unistd.h>
 using namespace std;
 
 void test_CLL(void)
@@ -36,10 +37,22 @@ void test_LLL(void)
 	l.push_back(y);
 	l.push_back(z);
 	l.display();
+
+	cout << "\ntesting lookup...\n";
+	Animal* found_animal = l.lookup(Animal("bob"));
+	if (found_animal)
+		cout << "Found " << *found_animal;
+	else
+		cout << "Not found! (ERROR)\n";
+
+	cout << "\ntesting remove...\n";
+	l.remove(Animal("bob"));
+	l.display();
 }
 
+	
 int main(void)
 {
-	test_CLL();
 	test_LLL();
+	test_CLL();
 }

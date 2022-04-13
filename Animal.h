@@ -30,46 +30,43 @@ class Animal
 	private:
 		struct size_brackets //put this in its own .h or .h/.cpp?
 		{
-			int size_int;
-			size_brackets(void) : size_int(-1) {}
-
-			size_brackets(int new_size)
-			{
-				set_size(new_size);
-			}
 			private:
-			void set_size(int new_size)
-			{
-				/* don't want to do it this way unless I can report the
-					traceback which I don't know how to do. TODO
-				if (new_size < 0 or new_size > 9)
-					throw overflow_error("Animal initialized with bad size value!\n");
-				else
-					size_int = new_size;
-				*/
-				if (new_size <= 0)
-					size_int = 0;
-				else if (new_size >= 9)
-					size_int = 9;
-				else
-					size_int = new_size;
-			}
+				int size_int;
+			public:
+				size_brackets(void) : size_int(-1) {}
+
+				size_brackets(int new_size)
+				{
+					set_size(new_size);
+				}
+
+				void set_size(int new_size)
+				{
+					if (new_size <= 0)
+						size_int = 0;
+					else if (new_size >= 9)
+						size_int = 9;
+					else
+						size_int = new_size;
+				}
 		};
 		char* name;						//set PER-INSTANCE of subclasses by user.
 		const string breed;				//set by derived classes.
-		const virtual float min_speed;			//set by derived classes.
-		const virtual float max_speed;			//set by derived classes.
-		const virtual float speed;				//set PER-INSTANCE of subclasses based on min, max.
 		const bool predator;			//set by derived classes.
 		const bool prey;				//set by derived classes.
 		//set by derived classes; int with min 0, max 9.
 		const size_brackets size_bracket;
 
+	protected:
+		const float min_speed;			//set by derived classes.
+		const float max_speed;			//set by derived classes.
+		float speed;				//set PER-INSTANCE of subclasses based on min, max.
+
 	public:
 		Animal(void);
 		Animal(string name);
 		Animal(string name, string breed);
-		Animal(string name, string breed, bool predator, bool prey, size_brackets size);
+		Animal(string name, string breed, bool predator, bool prey, size_brackets size, float min_speed, float max_speed);
 		virtual ~Animal(void);
 		Animal(const Animal& src);
 		const Animal& operator=(const Animal& rhs);
@@ -108,10 +105,6 @@ class Cat: public Animal
 		Cat(string new_name);
 		//~Cat(void);
 		float calculate_time(int dist); //TODO
-	private:
-		const float min_speed = 0.6;
-		const float max_speed = 0.85;
-		const float speed;
 };
 		
 class Tortoise: public Animal
@@ -120,10 +113,6 @@ class Tortoise: public Animal
 		Tortoise(string new_name);
 		//~Tortoise(void);
 		float calculate_time(int dist); //TODO
-	private:
-		const float min_speed = 0.1;
-		const float max_speed = 0.5;
-		const float speed;
 };
 		
 class Hare: public Animal
@@ -132,8 +121,4 @@ class Hare: public Animal
 		Hare(string new_name);
 		//~Hare(void);
 		float calculate_time(int dist); //TODO
-	private:
-		const float min_speed = 0.7;
-		const float max_speed = 0.95;
-		const float speed;
-
+};

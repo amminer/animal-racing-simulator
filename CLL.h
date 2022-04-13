@@ -94,17 +94,42 @@ class CLL
 				return nullptr;
 		}
 
+		bool remove(T to_remove)
+		{ 
+			bool ret = false;
+			if (head){
+				if (Node<T>* found_node = find_node(head, to_remove); found_node){
+					remove_node(found_node);
+					ret = true;
+				}
+			}
+			return ret;
+		}
+		void remove_node(Node<T>* to_del)
+		{
+			if (to_del == head){			//case head
+				head = to_del->get_next();
+				head->set_prev(nullptr);
+			}
+			else if (to_del == tail){		//case tail
+				tail = to_del->get_prev();
+				tail->set_next(nullptr);
+			}
+			else{							//case sandwiched
+				//next.prev = this.prev
+				to_del->get_next()->set_prev(to_del->get_prev());
+				//prev.next = this.next
+				to_del->get_prev()->set_next(to_del->get_next());
+			}
+			delete to_del;					//all cases
+		}
+
 		void pop_back(void)
 		{ 
 			//TODO - not strictly necessary for asgmt1
 		}
 
 		void pop_front(void)
-		{ 
-			//TODO - not strictly necessary for asgmt1
-		}
-
-		void remove(T& toRemove)
 		{ 
 			//TODO - not strictly necessary for asgmt1
 		}

@@ -92,17 +92,46 @@ class LLL
 				return nullptr;
 		}
 
+		bool remove(T to_remove)
+		{ 
+			bool ret = false;
+			if (head){
+				if (Node<T>* found_node = find_node(head, to_remove); found_node){
+					remove_node(found_node);
+					ret = true;
+				}
+			}
+			return ret;
+		}
+		void remove_node(Node<T>* to_del)
+		{
+			//len of list must be >=1 to enter
+			if (to_del == head){			//case (head, len>1) or (head, len=1)
+				head = to_del->get_next();
+				if (head != tail)			//subcase len>1
+					head->set_prev(nullptr);
+				else						//subcase len=1
+					tail = nullptr;
+			}
+			else if (to_del == tail){		//case tail, len>1
+				tail = to_del->get_prev();
+				tail->set_next(nullptr);
+			}
+			else{							//case sandwiched, len>1
+				if (to_del->get_next())	//next.prev = this.prev
+					to_del->get_next()->set_prev(to_del->get_prev());
+				if (to_del->get_prev()) //prev.next = this.next
+					to_del->get_prev()->set_next(to_del->get_next());
+			}
+			delete to_del;					//all cases
+		}
+
 		void pop_back(void)
 		{ 
 			//TODO - not strictly necessary for asgmt1
 		}
 
 		void pop_front(void)
-		{ 
-			//TODO - not strictly necessary for asgmt1
-		}
-
-		void remove(T& toRemove)
 		{ 
 			//TODO - not strictly necessary for asgmt1
 		}
