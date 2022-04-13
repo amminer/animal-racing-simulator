@@ -22,7 +22,7 @@ class LLL
 			if (head)
 				remove_all(head);
 		}
-		void remove_all(Node<T>& to_delete)
+		void remove_all(Node<T>* to_delete)
 		{
 			if (to_delete != tail)
 				remove_all(to_delete->get_next());
@@ -70,7 +70,7 @@ class LLL
 			//TODO - not strictly necessary for asgmt1
 		}
 
-		T& lookup(T& key) //must not use reference to accept rvalue arg
+		T* lookup(T key) //must not use reference to accept rvalue arg
 		{
 			Node<T>* ret_node = nullptr;
 			T* ret = nullptr;
@@ -82,12 +82,12 @@ class LLL
 			}
 			return ret;
 		}
-		Node<T>& find_node(Node<T>& list, T key) //must accept rvalue arg
+		Node<T>* find_node(Node<T>* list, T key) //must accept rvalue arg
 		{
-			if (&list->get_data() == key)
+			if (list->get_data() == key)
 				return list;
-			else if (&list != tail)
-				return find_node(*list->get_next(), key);
+			else if (list != tail)
+				return find_node(list->get_next(), key);
 			else
 				return nullptr;
 		}

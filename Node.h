@@ -17,17 +17,18 @@ class Node
 		Node(void)
 			: prev(nullptr), next(nullptr), data(nullptr) {};
 
-		Node(T new_data)
+		Node(T& new_data)
 			: prev(nullptr), next(nullptr), data(nullptr)
 		{
 			set_data(new_data);
 		}
 
-		void set_data(T new_data)
+		void set_data(T& new_data)
 		{
 			if(data)
 				delete data;
-			data = new T(new_data);
+			data = new T{new_data};
+			
 			return;
 		}
 
@@ -72,7 +73,7 @@ class Node
 			return;
 		}
 
-		T get_data(void)
+		T& get_data(void)
 		{
 			return *data;
 		}

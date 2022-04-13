@@ -43,7 +43,7 @@ class CLL
          * ARGS:    new_data, data to be wrapped in a node and inserted.
          * RETURN:  None.
          */
-		void push_back(T new_data)
+		void push_back(T& new_data)
 		{
 			Node<T>* new_node = new Node<T>(new_data);
 			Node<T>* temp = head;
@@ -62,12 +62,12 @@ class CLL
 			new_node->set_next(head);
 		}
 
-		void push_front(T new_data)
+		void push_front(T& new_data)
 		{
 			//TODO - not strictly necessary for asgmt1
 		}
 
-		void insert_at(T new_data, int position)
+		void insert_at(T& new_data, int position)
 		{
 			//TODO - not strictly necessary for asgmt1
 		}

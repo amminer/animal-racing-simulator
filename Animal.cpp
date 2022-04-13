@@ -16,28 +16,42 @@
 
 /*					BASE CLASS - DO NOT INSTANTIATE					*/
 Animal::Animal(void)
-	: name((char*)"UNKNOWN"), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
+	: name(nullptr), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
 	  predator(false), prey(false), size_bracket(0)
 {}
 
-Animal::Animal(string new_name) //temp? for testing TODO
-	: breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
+Animal::Animal(string name)
+	: name(nullptr), breed("UNKNOWN"), min_speed(0.0), max_speed(0.0), speed(0.0),
 	  predator(false), prey(false), size_bracket(0)
 {
-	set_name(new_name);
+	set_name(name);
 }
 
-Animal::Animal(string new_name, string new_breed) //temp? for testing TODO
-	: breed(new_breed), min_speed(0.0), max_speed(0.0), speed(0.0),
-	  predator(false), prey(false), size_bracket(0)
+Animal::Animal(string name, string breed, bool predator, bool prey, size_brackets size)
+	: name(nullptr), breed(breed), min_speed(0.0), max_speed(0.0), speed(0.0),
+	  predator(predator), prey(prey), size_bracket(size)
 {
-	set_name(new_name);
+	set_name(name);
 }
 
 Animal::~Animal(void)
 {
 	if (name)
-		delete name;
+		delete [] name;
+}
+
+Animal::Animal(const Animal& src)
+	: name(nullptr), breed(src.breed), min_speed(src.min_speed), max_speed(src.max_speed), speed(src.speed),
+	  predator(src.predator), prey(src.prey), size_bracket(src.size_bracket)
+{
+	if (this != &src) //self assignment check
+		*this = src;
+}
+
+const Animal& Animal::operator=(const Animal& rhs)
+{
+	set_name(rhs.get_name());
+	return *this;
 }
 
 bool Animal::operator==(const Animal& other)
@@ -63,9 +77,9 @@ string Animal::get_name(void) const
 void Animal::set_name(string new_name)
 {
 	if (name){
-		delete name;
-		name = new char[new_name.length() + 1];
+		delete [] name;
 	}
+	name = new char[new_name.length() + 1];
 	strcpy(name, new_name.c_str());
 }
 
@@ -95,19 +109,35 @@ bool Animal::predates(Animal& other)
 }
 
 /*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
-//TODO
+//Cat
+Cat::Cat(string new_name) :
+	Animal(new_name, "cat", true, true, 4), 
+	speed((float)(rand() % ((int)(100*max_speed) + 1 - (int)(100*min_speed))
+	  + (int)(100*min_speed))/100) {}
 
-float Cat::calculate_time(int dist) //TODO
+float Cat::calculate_time(int dist)
 {
-	return 0.0;
+	return speed; //TODO
 }
 
-float Tortoise::calculate_time(int dist) //TODO
+//Tortoise
+Tortoise::Tortoise(string new_name) :
+	Animal(new_name, "tortoise", true, true, 4),
+	speed((float)(rand() % ((int)(100*max_speed) + 1 - (int)(100*min_speed))
+	  + (int)(100*min_speed))/100) {}
+
+float Tortoise::calculate_time(int dist)
 {
-	return 0.0;
+	return speed; //TODO
 }
 
-float Hare::calculate_time(int dist) //TODO
+//Hare
+Hare::Hare(string new_name) :
+	Animal(new_name, "hare", true, true, 2),
+	speed((float)(rand() % ((int)(100*max_speed) + 1 - (int)(100*min_speed))
+	  + (int)(100*min_speed))/100) {}
+
+float Hare::calculate_time(int dist)
 {
-	return 0.0;
+	return speed; //TODO
 }
