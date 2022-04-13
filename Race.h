@@ -37,17 +37,17 @@ class Race{
 		Race(const Race& other) = delete;
 		Race& operator=(const Race& rhs) = delete;
 
-		bool start(void);			//calculates the performance of animals in roster.
+		//returns whether race can run, calls Animal::calculate_time and Race::remove_prey
+		bool start(void);
 		vector<Animal*> stop(void);	//prints results, returns removed animals.
-		void separate_lanes(void);	//sets lane_separators_raised to true.
-		void unseparate_lanes(void);//sets lane_separators to true.
+		Animal* get_results(void);	//returns winners array - should just have stop display winners?
 		//if there is a predator, removes at most one smaller prey, closest first.
-		void remove_prey(void);
 
     private:
-		Animal* winners[2]; //contains ptrs to the first and second place animals.
+		Animal** winners[2]; //contains ptrs to the first and second place animals.
 		vector<pair<Animal*, double>> roster; //Holds ptr to each animal and its time.
 		const void display(void); //called from start to display contestants.
 		const bool separators_raised; //used to determine whether predators can hunt.
+		void remove_prey(void);
 		const float distance;
 };

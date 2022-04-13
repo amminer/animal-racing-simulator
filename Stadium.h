@@ -36,7 +36,7 @@
  */
 class Stadium{
     public:
-		Stadium(void);
+		Stadium(void); //main loop goes here - write menu functions?
 		~Stadium(void);
 		Stadium(const Stadium& other) = delete;
 		Stadium& operator=(const Stadium& rhs) = delete;

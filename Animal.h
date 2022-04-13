@@ -76,7 +76,6 @@ class Animal
 		string get_name(void) const;
 		string get_breed(void) const; 
 		void set_name(string new_name);
-		void set_breed(string new_breed);
 		void display(void);
 		bool is(Animal& other);
 
