@@ -24,7 +24,7 @@
 #include<stdexcept> //bounds check on size_bracket
 using namespace std;
 
-/* base class for derived animals, should not be instantiated */
+/* base class for derived animals, should not be instantiated except as a search key*/
 class Animal
 {
 	private:
@@ -57,9 +57,9 @@ class Animal
 		};
 		char* name;						//set PER-INSTANCE of subclasses by user.
 		const string breed;				//set by derived classes.
-		const float min_speed;			//set by derived classes.
-		const float max_speed;			//set by derived classes.
-		const float speed;				//set PER-INSTANCE of subclasses based on min, max.
+		const virtual float min_speed;			//set by derived classes.
+		const virtual float max_speed;			//set by derived classes.
+		const virtual float speed;				//set PER-INSTANCE of subclasses based on min, max.
 		const bool predator;			//set by derived classes.
 		const bool prey;				//set by derived classes.
 		//set by derived classes; int with min 0, max 9.
@@ -136,4 +136,4 @@ class Hare: public Animal
 		const float min_speed = 0.7;
 		const float max_speed = 0.95;
 		const float speed;
-};
+
