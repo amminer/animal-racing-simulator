@@ -1,48 +1,53 @@
+#pragma once
+
+#include <iostream>
+
 /* Amelia Miner
  * 04/09/22
  * cs 202 section 003
  * program #: 1
- * file: LLL.h
- * PURPOSE: linear doubly linked list class template.
+ * file: LinkedList.h
+ * PURPOSE: Node, linear linked list,
+ *	and circular linked list class templates.
  */
 
-#pragma once
+//node (used by LLL and CLL)
+template<typename T>
+class Node
+{
+	public:
+		Node(void);
+		Node(T& new_data);
+		Node<T>(const Node<T>& src);
+		Node<T>& operator=(const Node<T>& rhs);
+		~Node(void);
 
-#include "Node.h"
+		Node<T>* get_next(void);
+		Node<T>* get_prev(void);
+		T& get_data(void);
+		T* get_data_ptr(void);
+		void set_next(Node<T>* n);
+		void set_prev(Node<T>* n);
+		void set_data(T& new_data);
+	private:
+		Node* prev;
+		Node* next;
+		T* data;
+};
 
+//linear doubly linked list
 template<typename T>
 class LLL
 {
 	public:
-		LLL(void)
-			: head(nullptr), tail(nullptr) {}
-
-		~LLL(void)
-		{
-			if (head)
-				remove_all(head);
-		}
-		void remove_all(Node<T>* to_delete)
-		{
-			if (to_delete != tail)
-				remove_all(to_delete->get_next());
-			delete to_delete; //TODO tail recursion
-		}
-
+		LLL(void);
+		~LLL(void);
 		LLL(const LLL& src) = delete;
 		const LLL& operator=(const LLL& rhs) = delete;
 
-		// More legible and public alternative to (bool) !head
-		bool is_empty(void)
-		{
-			return !head;
-		}
+		void remove_all(Node<T>* to_delete);
+		bool is_empty(void);
 
-        /* LLL::push_back(T& new_data)
-         * PURPOSE:	insert a new node at the tail of the linkedlist,
-         * ARGS:    new_data, data to be wrapped in a node and inserted.
-         * RETURN:  None.
-         */
 		void push_back(T& new_data)
 		{
 			Node<T>* new_node = new Node<T>(new_data);
@@ -58,16 +63,6 @@ class LLL
 				new_node->set_prev(temp);
 			}
 			tail = new_node; //always the case
-		}
-
-		void push_front(T& new_data)
-		{
-			//TODO - not strictly necessary for asgmt1
-		}
-
-		void insert_at(T& new_data, int position)
-		{
-			//TODO - not strictly necessary for asgmt1
 		}
 
 		T* lookup(T key) //must not use reference to accept rvalue arg
@@ -126,27 +121,6 @@ class LLL
 			delete to_del;					//all cases
 		}
 
-		void pop_back(void)
-		{ 
-			//TODO - not strictly necessary for asgmt1
-		}
-
-		void pop_front(void)
-		{ 
-			//TODO - not strictly necessary for asgmt1
-		}
-
-		void remove_at(int index)
-		{ 
-			//TODO - not strictly necessary for asgmt1
-		}
-
-		int size(void)
-		{
-			//TODO - not strictly necessary for asgmt1
-			return 0;
-		}
-
 		void display(void)
 		{
 			Node<T>* temp = head;
@@ -161,3 +135,5 @@ class LLL
 		Node<T>* head;
 		Node<T>* tail;
 };
+
+#include "LinkedList.cpp" //avoids linker error
