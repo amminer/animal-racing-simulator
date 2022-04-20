@@ -15,9 +15,9 @@ Implement Animal::calculate_time(...) for subclasses
 
 Implement Animal::predates(Animal&) func
 
-write remove_node funcs for lists
-
 Implement Race, Stable, Stadium
+
+change CLL to use rear instead of head and tail
 
 ensure const is used wherever possible
 

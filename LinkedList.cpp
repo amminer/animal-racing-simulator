@@ -201,3 +201,52 @@ void LLL<T>::display(Node<T>* list)
 		display(list->get_next());
 	}
 }
+
+/*								CLL								*/
+//		constructors, destructors, op overloads, and their helpers
+template<typename T>
+CLL<T>::CLL(void)
+	: head(nullptr), tail(nullptr) {}
+
+template<typename T>
+CLL<T>::~CLL(void)
+{ if (head) remove_all(head); }
+template<typename T>
+void remove_all(Node<T>* to_delete)
+{
+	if (to_delete != tail)
+		remove_all(to_delete->get_next());
+	delete to_delete; //can this be made tail recursive? TODO
+}
+
+template<typename T>
+bool CLL<T>::is_empty(void)
+{ return (bool) !head; }
+
+template<typename T>
+void CLL<T>::push_back(T& new_data)
+{
+	Node<T>* new_node = new Node<T>(new_data);
+	if (!head){
+		head = new_node;
+		tail = new_node;
+		new_node->set_next(new_node);
+		new_node->set_prev(new_node);
+	}
+	else
+		push_back(head, new_node);
+}
+template<typename T>
+void CLL<T>::push_back(Node<T>* list, Node<T>* new_node)
+{
+	if (list == tail){
+		list->set_next(new_node);
+		new_node->set_prev(list);
+		new_node->set_next(head);
+		head->set_prev(new_node);
+		tail = new_node;
+	}
+	else
+		push_back(list->get_next(), new_node);
+}
+
