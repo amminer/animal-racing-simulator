@@ -1,3 +1,16 @@
+Separate node & lists out into .cpp files
+
+DATA STRUCTURES MUST BE IMPLEMENTED RECURSIVELY
+
+Change size_brackets to a class not a struct,
+Un-nest it from within class Animal if you have time - not necessary
+
+~Animal does not need to be virtual, just change it
+
+operator= should be const member function
+
+Implement copy constructors instead of deleting for dyn mem classes
+
 Implement Animal::calculate_time(...) for subclasses
 
 Implement Animal::predates(Animal&) func
@@ -5,6 +18,10 @@ Implement Animal::predates(Animal&) func
 write remove_node funcs for lists
 
 Implement Race, Stable, Stadium
+
+ensure const is used wherever possible
+
+ensure objects are passed by const reference whenever possible
 
 ensure all classes with dyn mem (Animal&subs, lists, nodes) can deep copy (or delete copy constr)
 

@@ -5,12 +5,12 @@
  */
 #include "Race.h"
 #include "Animal.h"
-#include "CLL.h"
-#include "LLL.h"
+#include "LinkedList.h"
 #include <iostream>
 #include <unistd.h>
 using namespace std;
 
+/*
 void test_CLL(void)
 {
 	cout << "\ntesting CLL:\n";
@@ -24,6 +24,7 @@ void test_CLL(void)
 	l.push_back(z);
 	l.display();
 }
+*/
 
 void test_LLL(void)
 {
@@ -54,5 +55,5 @@ void test_LLL(void)
 int main(void)
 {
 	test_LLL();
-	test_CLL();
+	//test_CLL();
 }
