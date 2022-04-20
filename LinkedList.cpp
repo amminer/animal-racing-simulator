@@ -151,18 +151,19 @@ Node<T>* LLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg?
 }
 
 template<typename T>
-bool LLL<T>::remove(T to_remove)
+bool LLL<T>::remove(T to_remove) //returns whether item was removed
 { 
 	bool ret = false;
 	if (head)
-		if (Node<T>* found_node = find_node(head, to_remove); found_node)
-			ret = remove_node(found_node);
+		if (Node<T>* found_node = find_node(head, to_remove); found_node){
+			ret = true;
+			remove_node(found_node);
+		}
 	return ret;
 }
 template<typename T>
-bool LLL<T>::remove_node(Node<T>* to_del)
+void LLL<T>::remove_node(Node<T>* to_del)
 {
-	// ! len of list must be >=1 lest ye segfault
 	if (to_del == head){			//case (head, len>1) or (head, len=1)
 		head = to_del->get_next();
 		if (head != tail)			//subcase len>1
@@ -181,7 +182,6 @@ bool LLL<T>::remove_node(Node<T>* to_del)
 			to_del->get_prev()->set_next(to_del->get_next());
 	}
 	delete to_del;					//all cases
-	return true;
 }
 
 template<typename T>
@@ -212,7 +212,7 @@ template<typename T>
 CLL<T>::~CLL(void)
 { if (head) remove_all(head); }
 template<typename T>
-void remove_all(Node<T>* to_delete)
+void CLL<T>::remove_all(Node<T>* to_delete)
 {
 	if (to_delete != tail)
 		remove_all(to_delete->get_next());
@@ -248,5 +248,79 @@ void CLL<T>::push_back(Node<T>* list, Node<T>* new_node)
 	}
 	else
 		push_back(list->get_next(), new_node);
+}
+
+template<typename T>
+T* CLL<T>::lookup(T key) //must not use reference to accept rvalue arg
+{
+	Node<T>* ret_node = nullptr;
+	T* ret = nullptr;
+	if (head){
+		ret_node = find_node(head, key);
+		if (ret_node){
+			ret = ret_node->get_data_ptr();
+		}
+	}
+	return ret;
+}
+template<typename T>
+Node<T>* CLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg
+{
+	if (list->get_data() == key)
+		return list;
+	else if (list == tail)
+		return nullptr;
+	else
+		return find_node(list->get_next(), key);
+}
+
+template<typename T>
+bool CLL<T>::remove(T to_remove) //Must accept rvalue arg
+{ 
+	bool ret = false;
+	if (head){
+		if (Node<T>* found_node = find_node(head, to_remove); found_node){
+			ret = true;
+			remove_node(found_node);
+		}
+	}
+	return ret;
+}
+template<typename T>
+void CLL<T>::remove_node(Node<T>* to_del)
+{
+	if (to_del == head){			//case head
+		head = to_del->get_next();
+		head->set_prev(nullptr);
+	}
+	else if (to_del == tail){		//case tail
+		tail = to_del->get_prev();
+		tail->set_next(nullptr);
+	}
+	else{							//case sandwiched
+		//next.prev = this.prev
+		to_del->get_next()->set_prev(to_del->get_prev());
+		//prev.next = this.next
+		to_del->get_prev()->set_next(to_del->get_next());
+	}
+	delete to_del;					//all cases
+}
+
+template<typename T>
+void CLL<T>::display(void)
+{
+	if (head)
+		display(head);
+	return;
+}
+template<typename T>
+void CLL<T>::display(Node<T>* list)
+{
+	std::cout << list->get_data() <<'\n';
+	if (list == tail)
+		return;
+	else{
+		display(list->get_next());
+	}
 }
 
