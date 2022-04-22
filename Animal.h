@@ -24,54 +24,44 @@
 #include<stdexcept> //bounds check on size_bracket
 using namespace std;
 
+/*		used to constrain size property of base Animal class		*/
+class size_brackets
+{
+	private:
+		int size_int;
+	public:
+		size_brackets(void);
+		size_brackets(int new_size);
+		int restrict_size(int new_size);
+};
+
 /* base class for derived animals, should not be instantiated except as a search key*/
 class Animal
 {
 	private:
-		struct size_brackets //put this in its own .h or .h/.cpp?
-		{
-			private:
-				int size_int;
-			public:
-				size_brackets(void) : size_int(-1) {}
-
-				size_brackets(int new_size)
-				{
-					set_size(new_size);
-				}
-
-				void set_size(int new_size)
-				{
-					if (new_size <= 0)
-						size_int = 0;
-					else if (new_size >= 9)
-						size_int = 9;
-					else
-						size_int = new_size;
-				}
-		};
 		char* name;						//set PER-INSTANCE of subclasses by user.
 		const string breed;				//set by derived classes.
 		const bool predator;			//set by derived classes.
 		const bool prey;				//set by derived classes.
-		//set by derived classes; int with min 0, max 9.
+		//set by derived classes; int with min 0, max 9, needed for predation
 		const size_brackets size_bracket;
 
 	protected:
 		const float min_speed;			//set by derived classes.
 		const float max_speed;			//set by derived classes.
-		float speed;				//set PER-INSTANCE of subclasses based on min, max.
+		//set PER-INSTANCE of subclasses based on min, max.
+		float speed;				    //units are seconds per meter
 
 	public:
 		Animal(void);
 		Animal(string name);
 		Animal(string name, string breed);
 		Animal(string name, string breed, bool predator, bool prey, size_brackets size, float min_speed, float max_speed);
-		virtual ~Animal(void);
+		~Animal(void);
 		Animal(const Animal& src);
 		const Animal& operator=(const Animal& rhs);
 		friend ostream& operator<<(ostream& os, const Animal& oa);
-		bool operator==(const Animal& other);
+		bool operator==(const Animal& other) const;
 
 		string get_name(void) const;
 		string get_breed(void) const; 

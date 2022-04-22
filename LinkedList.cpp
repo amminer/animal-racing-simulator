@@ -31,16 +31,16 @@ void Node<T>::set_data(T& new_data)
 }
 
 template<typename T>
-Node<T>::Node(const Node<T>& src)
-	: prev(nullptr), next(nullptr), data(nullptr)
+Node<T>::Node(Node<T>& src)
+	: prev(src.prev), next(src.next), data(nullptr)
 {
-	this = src;
+	*this = src;
 }
 template<typename T>
-Node<T>& Node<T>::operator=(const Node<T>& rhs)
+Node<T>& Node<T>::operator=(Node<T>& rhs)
 {
 	if (this != &rhs){
-		set_data(rhs->get_data());
+		set_data(rhs.get_data());
 	}
 	return *this; //in case of chained assignments
 }
@@ -54,11 +54,11 @@ Node<T>::~Node(void)
 
 //				public member functions
 template<typename T>
-Node<T>* Node<T>::get_next(void)
+Node<T>*& Node<T>::get_next(void)
 { return next; }
 
 template<typename T>
-Node<T>* Node<T>::get_prev(void)
+Node<T>*& Node<T>::get_prev(void) 
 { return prev; }
 
 template<typename T>
@@ -76,11 +76,11 @@ void Node<T>::set_prev(Node* new_prev)
 }
 
 template<typename T>
-T& Node<T>::get_data(void)
+T& Node<T>::get_data(void) 
 { return *data; }
 
 template<typename T>
-T* Node<T>::get_data_ptr(void)
+T*& Node<T>::get_data_ptr(void) 
 { return data; }
 
 /*								LLL								*/
@@ -100,7 +100,32 @@ void LLL<T>::remove_all(Node<T>* to_del)
 	delete to_del; //TODO tail recursion
 }
 
-//TODO copy constr, operator=
+template<typename T>
+LLL<T>::LLL(const LLL<T>& src)
+	: head(nullptr), tail(nullptr)
+{
+	*this = src;
+}
+template<typename T>
+const LLL<T>& LLL<T>::operator=(const LLL<T>& rhs)
+{
+	if (&rhs != this)
+		copy_all(rhs.head, head, tail, nullptr);
+	return *this;
+}
+
+template<typename T>
+void LLL<T>::copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail, Node<T>* last_dest)
+{
+	if (!src)
+		return;
+	else{
+		dest = new Node<T>(*src);
+		dest->set_prev(last_dest);
+		dest_tail = dest;
+		copy_all(src->get_next(), dest->get_next(), dest_tail, dest);
+	}
+}
 
 //				public member functions
 template<typename T>
@@ -219,6 +244,36 @@ void CLL<T>::remove_all(Node<T>* to_delete)
 	delete to_delete; //can this be made tail recursive? TODO
 }
 
+template<typename T>
+CLL<T>::CLL(const CLL<T>& src)
+	: head(nullptr), tail(nullptr)
+{
+	*this = src;
+}
+template<typename T>
+const CLL<T>& CLL<T>::operator=(const CLL<T>& rhs)
+{
+	if (&rhs != this)
+		copy_all(rhs.head, head, tail, tail, rhs.head, head);
+	return *this;
+}
+
+template<typename T>
+void CLL<T>::copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail,
+					  Node<T>* last_dest, Node<T>* src_head, Node<T>* dest_head)
+{
+	dest = new Node<T>(*src);
+	dest_tail = dest;
+	dest->set_prev(last_dest);
+	dest->set_next(dest_head);
+	if (src->get_next() == src_head)
+		return;
+	else{
+		copy_all(src->get_next(), dest->get_next(), dest_tail, dest, src_head, dest_head);
+	}
+}
+
+//				public member functions
 template<typename T>
 bool CLL<T>::is_empty(void)
 { return (bool) !head; }

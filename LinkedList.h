@@ -18,14 +18,14 @@ class Node
 	public:
 		Node(void);
 		Node(T& new_data);
-		Node<T>(const Node<T>& src);
-		Node<T>& operator=(const Node<T>& rhs);
+		Node<T>(Node<T>& src);
+		Node<T>& operator=(Node<T>& rhs);
 		~Node(void);
 
-		Node<T>* get_next(void);
-		Node<T>* get_prev(void);
-		T& get_data(void);
-		T* get_data_ptr(void);
+		Node<T>*& get_next(void);
+		Node<T>*& get_prev(void) ;
+		T& get_data(void) ;
+		T*& get_data_ptr(void) ;
 		void set_next(Node<T>* n);
 		void set_prev(Node<T>* n);
 		void set_data(T& new_data);
@@ -42,8 +42,8 @@ class LLL
 	public:
 		LLL(void);
 		~LLL(void);
-		LLL(const LLL& src) = delete; //TODO
-		const LLL& operator=(const LLL& rhs) = delete; //TODO
+		LLL(const LLL& src);
+		const LLL& operator=(const LLL& rhs);
 
 		bool is_empty(void);
 		void push_back(T& new_data);
@@ -54,6 +54,7 @@ class LLL
 		Node<T>* head;
 		Node<T>* tail;
 
+		void copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail, Node<T>* last_dest);
 		void remove_all(Node<T>* to_del);
 		void push_back(Node<T>* list, Node<T>* new_node);
 		Node<T>* find_node(Node<T>* list, T key); //must accept rvalue arg
@@ -68,8 +69,8 @@ class CLL
 	public:
 		CLL(void);
 		~CLL(void);
-		CLL(const CLL& src) = delete; //TODO
-		const CLL& operator=(const CLL& rhs) = delete; //TODO
+		CLL(const CLL& src);
+		const CLL& operator=(const CLL& rhs);
 		bool is_empty(void);
 		void push_back(T& new_data);
 		T* lookup(T key); //must not use reference to accept rvalue arg
@@ -79,6 +80,8 @@ class CLL
 		Node<T>* head;
 		Node<T>* tail;
 
+		void copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail,
+							  Node<T>* last_dest, Node<T>* src_head, Node<T>* dest_head);
 		void remove_all(Node<T>* to_delete);
 		void push_back(Node<T>* list, Node<T>* new_node);
 		Node<T>* find_node(Node<T>* list, T key); //must accept rvalue arg

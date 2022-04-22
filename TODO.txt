@@ -1,17 +1,14 @@
-Separate node & lists out into .cpp files
+[X] Linkedlist copy constructors/operator=/recursive copy all
+	Need help from Karla
 
-DATA STRUCTURES MUST BE IMPLEMENTED RECURSIVELY
-
-Change size_brackets to a class not a struct,
+[X] Change size_brackets to a class not a struct,
 Un-nest it from within class Animal if you have time - not necessary
 
-~Animal does not need to be virtual, just change it
+[X] ~Animal does not need to be virtual, just change it
 
-operator= should be const member function
+[/] Implement copy constructors instead of deleting for dyn mem classes
 
-Implement copy constructors instead of deleting for dyn mem classes
-
-Implement Animal::calculate_time(...) for subclasses
+[X] Implement Animal::calculate_time(...) for subclasses
 
 Implement Animal::predates(Animal&) func
 

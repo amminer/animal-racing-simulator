@@ -1,3 +1,10 @@
+#pragma once
+
+#include<utility>
+#include<vector>
+#include "LinkedList.h"
+#include "Animal.h"
+
 /* Amelia Miner
  * 04/11/22
  * CS 202 section 003
@@ -18,13 +25,6 @@
  *	to retire with each additional race.
  */
 
-#pragma once
-
-#include<utility>
-#include<vector>
-#include "LinkedList.h"
-#include "Animal.h"
-
 /* class Race
  * See header comment;
  * Only to be instantiated inside class Stadium.
@@ -44,10 +44,11 @@ class Race{
 		//if there is a predator, removes at most one smaller prey, closest first.
 
     private:
-		Animal** winners[2]; //contains ptrs to the first and second place animals.
-		vector<pair<Animal*, double>> roster; //Holds ptr to each animal and its time.
+		vector<Animal*> winners; //contains ptrs to the first and second place animals.
+		vector<pair<Animal*, double>> scoreboard; //Holds ptr to each animal and its time.
 		const void display(void); //called from start to display contestants.
 		const bool separators_raised; //used to determine whether predators can hunt.
 		void remove_prey(void);
 		const float distance;
 };
+

@@ -14,6 +14,23 @@
 
 #include"Animal.h"
 
+/*		used to constrain size property of base Animal class		*/
+size_brackets::size_brackets(void)
+	: size_int(-1) {}
+
+size_brackets::size_brackets(int new_size)
+	: size_int(restrict_size(new_size)) {}
+
+int size_brackets::restrict_size(int new_size)
+{
+	if (new_size < 0)
+		return 0;
+	else if (new_size > 9)
+		return 9;
+	else
+		return new_size;
+}
+
 /*		BASE CLASS - ONLY INSTANTIATE AS RVALUE FOR LOOKUP		*/
 Animal::Animal(void)
 	: name(nullptr), breed("UNKNOWN"), predator(false), prey(false),
@@ -55,7 +72,7 @@ const Animal& Animal::operator=(const Animal& rhs)
 	return *this;
 }
 
-bool Animal::operator==(const Animal& other)
+bool Animal::operator==(const Animal& other) const
 {
 	if (strcmp(other.name, name) == 0)
 		return true;
@@ -112,7 +129,7 @@ bool Animal::predates(Animal& other)
 /*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
 //Cat
 Cat::Cat(string new_name) :
-	Animal(new_name, (string)"cat", true, true, 4, 0.6f, 0.85f)
+	Animal(new_name, (string)"cat", true, true, 4, 0.067f, 0.079f)
 {
 	//randomized speed
 	srand(time(0));
@@ -122,12 +139,19 @@ Cat::Cat(string new_name) :
 
 float Cat::calculate_time(int dist)
 {
-	return speed; //TODO
+	float time_elapsed = (float) dist * speed;
+	//cats must rest every so often, randomly
+	float seconds_per_rest = 60.0;
+	int num_possible_rests = (int)dist / 35;
+	for (int i=num_possible_rests; i > 0; i--){
+		if (rand() % 2) time_elapsed += seconds_per_rest; //50% chance of nap
+	}
+	return time_elapsed;
 }
 
 //Tortoise
 Tortoise::Tortoise(string new_name) :
-	Animal(new_name, (string)"tortoise", false, false, 4, 0.2f, 0.35f)
+	Animal(new_name, (string)"tortoise", false, false, 4, 1.5f, 2.0f)
 {
 	//randomized speed
 	srand(time(0));
@@ -137,12 +161,14 @@ Tortoise::Tortoise(string new_name) :
 
 float Tortoise::calculate_time(int dist)
 {
-	return speed; //TODO
+	float time_elapsed = (float) dist * speed;
+	//turtles do not rest
+	return time_elapsed;
 }
 
 //Hare
 Hare::Hare(string new_name) :
-	Animal(new_name, (string)"hare", false, true, 2, 0.65f, 0.9f)
+	Animal(new_name, (string)"hare", false, true, 2, 0.063f, 0.075f)
 {
 	//randomized speed
 	srand(time(0));
@@ -152,5 +178,10 @@ Hare::Hare(string new_name) :
 
 float Hare::calculate_time(int dist)
 {
-	return speed; //TODO
+	float time_elapsed = (float) dist * speed;
+	//hares must rest every so often, regularly
+	float seconds_per_rest = 30.0;
+	int num_rests = (int)dist / 20;
+	time_elapsed += (seconds_per_rest * (float) num_rests);
+	return time_elapsed;
 }

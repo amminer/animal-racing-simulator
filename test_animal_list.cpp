@@ -32,6 +32,12 @@ void test_CLL(void)
 	cout << "\ntesting remove...\n";
 	l.remove(Animal("bob"));
 	l.display();
+
+	cout << "\ntesting copy constructor...\n";
+	CLL m(l);
+	m.display();
+
+	cout << "\nDONE!\n";
 }
 
 void test_LLL(void)
@@ -57,8 +63,13 @@ void test_LLL(void)
 	cout << "\ntesting remove...\n";
 	l.remove(Animal("billy"));
 	l.display();
-}
 
+	cout << "\ntesting copy constructor...\n";
+	LLL m(l);
+	m.display();
+
+	cout << "\nDONE!\n";
+}
 	
 int main(void)
 {
