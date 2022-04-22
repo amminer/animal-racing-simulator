@@ -29,13 +29,19 @@ void test_CLL(void)
 	else
 		cout << "Not found! (ERROR)\n";
 
-	cout << "\ntesting remove...\n";
-	l.remove(Animal("bob"));
-	l.display();
+	//cout << "\ntesting remove...\n";
+	//l.remove(Animal("bob"));
+	//l.display();
 
 	cout << "\ntesting copy constructor...\n";
 	CLL m(l);
 	m.display();
+
+	cout << "\ntesting predation...\n";
+	cout << "should be true, false, false...\n";
+	cout << y.predates(z) << '\n';
+	cout << x.predates(z) << '\n';
+	cout << y.predates(x) << '\n';
 
 	cout << "\nDONE!\n";
 }
@@ -73,6 +79,6 @@ void test_LLL(void)
 	
 int main(void)
 {
-	test_LLL();
+	//test_LLL();
 	test_CLL();
 }

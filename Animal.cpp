@@ -21,6 +21,22 @@ size_brackets::size_brackets(void)
 size_brackets::size_brackets(int new_size)
 	: size_int(restrict_size(new_size)) {}
 
+bool size_brackets::operator<(const size_brackets& rhs) const
+{
+	if (this->size_int < rhs.size_int)
+		return true;
+	else
+		return false;
+}
+
+bool size_brackets::operator>(const size_brackets& rhs) const
+{
+	if (this->size_int > rhs.size_int)
+		return true;
+	else
+		return false;
+}
+
 int size_brackets::restrict_size(int new_size)
 {
 	if (new_size < 0)
@@ -123,6 +139,8 @@ bool Animal::predates(Animal& other)
 {
 	bool ret {false};
 	//take into account size, prey, and predator status //TODO
+	if (predator and other.prey and size_bracket > other.size_bracket)
+		ret = true;
 	return ret;
 }
 

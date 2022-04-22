@@ -32,6 +32,8 @@ class size_brackets
 	public:
 		size_brackets(void);
 		size_brackets(int new_size);
+		bool operator<(const size_brackets& rhs) const;
+		bool operator>(const size_brackets& rhs) const;
 		int restrict_size(int new_size);
 };
 

@@ -1,20 +1,8 @@
-[X] Linkedlist copy constructors/operator=/recursive copy all
-	Need help from Karla
+Implement Race
 
-[X] Change size_brackets to a class not a struct,
-Un-nest it from within class Animal if you have time - not necessary
+Stable
 
-[X] ~Animal does not need to be virtual, just change it
-
-[/] Implement copy constructors instead of deleting for dyn mem classes
-
-[X] Implement Animal::calculate_time(...) for subclasses
-
-Implement Animal::predates(Animal&) func
-
-Implement Race, Stable, Stadium
-
-change CLL to use rear instead of head and tail
+Stadium
 
 ensure const is used wherever possible
 
