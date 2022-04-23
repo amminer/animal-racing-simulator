@@ -31,9 +31,8 @@
  */
 class Race{
     public:
-		Race(void);
-		Race(float new_distance, vector<Animal*> competitors, bool separators);
-		//~Race(void);
+		//Race(void); //race should only be instantiated with parameters
+		Race(float new_distance, vector<Animal*>& competitors, bool separators);
 
 		//returns whether race can run, calls Animal::calculate_time and Race::remove_prey
 		bool start(void);
@@ -41,13 +40,13 @@ class Race{
 		Animal* get_results(void);	//returns winners array - should just have stop display winners?
 		//if there is a predator, removes at most one smaller prey, closest first.
 
-    private:
+    //private: //commented out to debug
 		const float distance;
 		vector<Animal*> winners; //contains ptrs to the first and second place animals.
 		CLL< pair<Animal*, float> > scoreboard; //Holds ptr to each animal and its time.
 		const bool separators_raised; //used to determine whether predators can hunt.
 
 		const void display(void); //called from start to display contestants.
-		void remove_prey(void);
+		vector<Animal*> remove_prey(void);
 };
 
