@@ -1,3 +1,6 @@
+#include "Race.h"
+#include "Animal.h"
+
 /* Amelia Miner
  * 04/11/22
  * CS 202 section 003
@@ -19,4 +22,13 @@
  */
 
 Race::Race(void)
-	: 
+	: distance(0.0), winners({nullptr, nullptr}), separators_raised(false) {}
+
+Race::Race(float new_distance, vector<Animal*> competitors, bool separators)
+	: distance(new_distance), winners({nullptr, nullptr}), separators_raised(separators)
+{
+	for (Animal* elmt: competitors){
+		auto new_entry = pair<Animal*, double>(elmt, -1.0);
+		scoreboard.push_back(new_entry);
+	}
+}

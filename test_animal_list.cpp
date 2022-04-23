@@ -43,6 +43,10 @@ void test_CLL(void)
 	cout << x.predates(z) << '\n';
 	cout << y.predates(x) << '\n';
 
+	cout << "\ntesting len...\n" << m.length() << '\n';
+
+	cout << "\ntesting at...\n" << m.at(0) << m.at(1) << m.at(2);
+
 	cout << "\nDONE!\n";
 }
 
@@ -66,19 +70,31 @@ void test_LLL(void)
 	else
 		cout << "Not found! (ERROR)\n";
 
+	/*
 	cout << "\ntesting remove...\n";
 	l.remove(Animal("billy"));
 	l.display();
+	*/
 
 	cout << "\ntesting copy constructor...\n";
 	LLL m(l);
 	m.display();
+
+	cout << "\ntesting predation...\n";
+	cout << "should be true, false, false...\n";
+	cout << y.predates(z) << '\n';
+	cout << x.predates(z) << '\n';
+	cout << y.predates(x) << '\n';
+
+	cout << "\ntesting len...\n" << m.length() << '\n';
+
+	cout << "\ntesting at...\n" << m.at(0) << m.at(1) << m.at(2);
 
 	cout << "\nDONE!\n";
 }
 	
 int main(void)
 {
-	//test_LLL();
+	test_LLL();
 	test_CLL();
 }

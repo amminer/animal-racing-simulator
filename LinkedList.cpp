@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LinkedList.h"
+#include <stdexcept>
 
 /* Amelia Miner
  * 04/09/22
@@ -127,10 +128,39 @@ void LLL<T>::copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail, Node<T>
 	}
 }
 
-//				public member functions
+//				public member functions & their private helpers
 template<typename T>
 bool LLL<T>::is_empty(void)
 { return !head; }
+
+template<typename T>
+int LLL<T>::length(void)
+{ return count_nodes(head); }
+template<typename T>
+int LLL<T>::count_nodes(Node<T>* list)
+{
+	if (list == tail)
+		return 1;
+	else
+		return 1 + count_nodes(list->get_next());
+}
+
+template<typename T>
+T& LLL<T>::at(int index)
+{
+	if (index < 0 or index >= length())
+		throw std::out_of_range("index out of bounds!");
+	else
+		return find_at_index(head, index);
+}
+template<typename T>
+T& LLL<T>::find_at_index(Node<T>* list, int index)
+{
+	if (index == 0)
+		return list->get_data();
+	else
+		return find_at_index(list->get_next(), index-1);
+}
 
 template<typename T>
 void LLL<T>::push_back(T& new_data)
@@ -277,6 +307,35 @@ void CLL<T>::copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail,
 template<typename T>
 bool CLL<T>::is_empty(void)
 { return (bool) !head; }
+
+template<typename T>
+int CLL<T>::length(void)
+{ return count_nodes(head); }
+template<typename T>
+int CLL<T>::count_nodes(Node<T>* list)
+{
+	if (list == tail)
+		return 1;
+	else
+		return 1 + count_nodes(list->get_next());
+}
+
+template<typename T>
+T& CLL<T>::at(int index)
+{
+	if (index < 0 or index >= length())
+		throw std::out_of_range("index out of bounds!");
+	else
+		return find_at_index(head, index);
+}
+template<typename T>
+T& CLL<T>::find_at_index(Node<T>* list, int index)
+{
+	if (index == 0)
+		return list->get_data();
+	else
+		return find_at_index(list->get_next(), index-1);
+}
 
 template<typename T>
 void CLL<T>::push_back(T& new_data)

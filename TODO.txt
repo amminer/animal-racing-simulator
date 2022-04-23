@@ -4,6 +4,8 @@ Stable
 
 Stadium
 
+Make list funcs use refs, deal with it in consuming code
+
 ensure const is used wherever possible
 
 ensure objects are passed by const reference whenever possible

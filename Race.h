@@ -32,10 +32,8 @@
 class Race{
     public:
 		Race(void);
-		~Race(void);
-		Race(vector<Animal> new_roster, int new_dist);
-		Race(const Race& other) = delete;
-		Race& operator=(const Race& rhs) = delete;
+		Race(float new_distance, vector<Animal*> competitors, bool separators);
+		//~Race(void);
 
 		//returns whether race can run, calls Animal::calculate_time and Race::remove_prey
 		bool start(void);
@@ -44,11 +42,12 @@ class Race{
 		//if there is a predator, removes at most one smaller prey, closest first.
 
     private:
-		vector<Animal*> winners; //contains ptrs to the first and second place animals.
-		vector<pair<Animal*, double>> scoreboard; //Holds ptr to each animal and its time.
-		const void display(void); //called from start to display contestants.
-		const bool separators_raised; //used to determine whether predators can hunt.
-		void remove_prey(void);
 		const float distance;
+		vector<Animal*> winners; //contains ptrs to the first and second place animals.
+		CLL< pair<Animal*, float> > scoreboard; //Holds ptr to each animal and its time.
+		const bool separators_raised; //used to determine whether predators can hunt.
+
+		const void display(void); //called from start to display contestants.
+		void remove_prey(void);
 };
 

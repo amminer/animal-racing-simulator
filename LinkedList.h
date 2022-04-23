@@ -46,6 +46,8 @@ class LLL
 		const LLL& operator=(const LLL& rhs);
 
 		bool is_empty(void);
+		int length(void);
+		T& at(int index);
 		void push_back(T& new_data);
 		T* lookup(T key); //must not use reference to accept rvalue arg
 		bool remove(T to_remove);
@@ -54,6 +56,8 @@ class LLL
 		Node<T>* head;
 		Node<T>* tail;
 
+		int count_nodes(Node<T>* list);
+		T& find_at_index(Node<T>* list, int index);
 		void copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail, Node<T>* last_dest);
 		void remove_all(Node<T>* to_del);
 		void push_back(Node<T>* list, Node<T>* new_node);
@@ -72,16 +76,20 @@ class CLL
 		CLL(const CLL& src);
 		const CLL& operator=(const CLL& rhs);
 		bool is_empty(void);
+		int length(void);
+		T& at(int index);
 		void push_back(T& new_data);
-		T* lookup(T key); //must not use reference to accept rvalue arg
-		bool remove(T to_remove); //Must accept rvalue arg
+		T* lookup(T key);
+		bool remove(T to_remove);
 		void display(void);
 	private:
 		Node<T>* head;
 		Node<T>* tail;
 
+		int count_nodes(Node<T>* list);
+		T& find_at_index(Node<T>* list, int index);
 		void copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail,
-							  Node<T>* last_dest, Node<T>* src_head, Node<T>* dest_head);
+					  Node<T>* last_dest, Node<T>* src_head, Node<T>* dest_head);
 		void remove_all(Node<T>* to_delete);
 		void push_back(Node<T>* list, Node<T>* new_node);
 		Node<T>* find_node(Node<T>* list, T key); //must accept rvalue arg
