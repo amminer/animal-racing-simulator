@@ -8,6 +8,7 @@
 
 int main(void)
 {
+	srand(time(0));
 	vector<Animal> animalsV = {Cat("fredward"), Hare("billiam"),
 						   Tortoise("bartholomew"), Hare("James"),
 						   Tortoise("bartholomew the second"), Cat("Dahlia")};
@@ -20,14 +21,24 @@ int main(void)
 		animalPtrs.push_back(&animals.at(i));
 	}
 
-	auto myRace = Race(1000, animalPtrs, true);
+	auto myRace = Race(2000, animalPtrs, false);
+
+	vector<Animal*> eaten;
+	if (myRace.start()){
+		cout << "And they're off!\n";
+		 eaten = myRace.stop();
+	}
+	else{
+		cout << myRace.scoreboard.length() << " competitor(s) is not enough or too many!\n";
+	}
 
 	for (int i=0; i < myRace.scoreboard.length(); i++){
 		cout << "Race has a competitor: " << *myRace.scoreboard.at(i).first
 			 << " with a score of " << myRace.scoreboard.at(i).second << '\n';
 	}
 
-	auto deadCritters = myRace.remove_prey();
-	for (auto elmt: deadCritters)
-		cout << "One dead: " << *elmt << '\n';
+	cout << "\neaten critters:\n";
+	for (Animal* a: eaten){
+		cout << *a << '\n';
+	}
 }

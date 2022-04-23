@@ -97,4 +97,4 @@ class CLL
 		void display(Node<T>* list);
 };
 
-#include "LinkedList.cpp" //avoids linker error
+#include "LinkedList.tpp"

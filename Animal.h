@@ -59,7 +59,7 @@ class Animal
 		Animal(string name);
 		Animal(string name, string breed);
 		Animal(string name, string breed, bool predator, bool prey, size_brackets size, float min_speed, float max_speed);
-		~Animal(void);
+		virtual ~Animal(void); //virtual to suppress compiler warning
 		Animal(const Animal& src);
 		const Animal& operator=(const Animal& rhs);
 		friend ostream& operator<<(ostream& os, const Animal& oa);
@@ -75,10 +75,8 @@ class Animal
 		 * 		Calculates how long it would take for an Animal object to
 		 * 	run a race of distance dist; behavior unimplemented in Animal superclass
 		 *	and derived differently for each subclass.
-		 *		Cannot make pure virtual - prevents use in linkedlist lookup
-		 *	(have to search by instance) - seriously bothered by this. TODO
 		 */
-		virtual float calculate_time(int dist) {return 0.0;}
+		float calculate_time(int dist);
 		//virtual float calculate_dist(float time); //May want to allow for time-based races
 
 		/*Animal::predates(Animal& other)
@@ -94,22 +92,16 @@ class Cat: public Animal
 {
 	public:
 		Cat(string new_name);
-		//~Cat(void);
-		float calculate_time(int dist); //TODO
 };
 		
 class Tortoise: public Animal
 {
 	public:
 		Tortoise(string new_name);
-		//~Tortoise(void);
-		float calculate_time(int dist); //TODO
 };
 		
 class Hare: public Animal
 {
 	public:
 		Hare(string new_name);
-		//~Hare(void);
-		float calculate_time(int dist); //TODO
 };

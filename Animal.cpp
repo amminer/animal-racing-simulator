@@ -104,7 +104,6 @@ ostream& operator<<(ostream& os, const Animal& oa)
 
 string Animal::get_name(void) const
 {
-	
 	return string(name);
 }
 
@@ -138,33 +137,43 @@ bool Animal::is(Animal& other)
 bool Animal::predates(Animal& other)
 {
 	bool ret {false};
-	//take into account size, prey, and predator status //TODO
 	if (predator and other.prey and size_bracket > other.size_bracket)
 		ret = true;
 	return ret;
 }
 
+float Animal::calculate_time(int dist)
+{
+	float time_elapsed = (float) dist * (float) speed;
+	if (breed == "cat"){
+		//cats must rest every so often, randomly
+		float seconds_per_rest = 80.0;
+		int num_possible_rests = dist / 35;
+		for (int i=num_possible_rests; i > 0; i--){
+			if (rand() % 2) time_elapsed += seconds_per_rest; //50% chance of nap
+		}
+	}
+	else if (breed == "hare"){
+		//hares must rest every so often, regularly
+		float seconds_per_rest = 25.0;
+		int num_rests = dist / 20;
+		time_elapsed += (float)(seconds_per_rest * (float) num_rests);
+	}
+	else if (breed == "tortoise"){
+		//turtles do not rest
+	}
+	//cout << "time: " << time_elapsed << '\n';
+	return time_elapsed;
+}
+
 /*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
 //Cat
 Cat::Cat(string new_name) :
-	Animal(new_name, (string)"cat", true, true, 4, 0.067f, 0.079f)
+	Animal(new_name, (string)"cat", true, true, 4, 0.069f, 0.081f)
 {
 	//randomized speed
-	srand(time(0));
 	speed = (float)((rand() % ((int)(100.0f*max_speed) + 1
 		    - (int)(100.0f*min_speed)) + (int)(100.0f*min_speed))/100.0f);
-}
-
-float Cat::calculate_time(int dist)
-{
-	float time_elapsed = (float) dist * speed;
-	//cats must rest every so often, randomly
-	float seconds_per_rest = 60.0;
-	int num_possible_rests = (int)dist / 35;
-	for (int i=num_possible_rests; i > 0; i--){
-		if (rand() % 2) time_elapsed += seconds_per_rest; //50% chance of nap
-	}
-	return time_elapsed;
 }
 
 //Tortoise
@@ -172,16 +181,8 @@ Tortoise::Tortoise(string new_name) :
 	Animal(new_name, (string)"tortoise", false, false, 4, 1.5f, 2.0f)
 {
 	//randomized speed
-	srand(time(0));
 	speed = (float)((rand() % ((int)(100.0f*max_speed) + 1
 		    - (int)(100.0f*min_speed)) + (int)(100.0f*min_speed))/100.0f);
-}
-
-float Tortoise::calculate_time(int dist)
-{
-	float time_elapsed = (float) dist * speed;
-	//turtles do not rest
-	return time_elapsed;
 }
 
 //Hare
@@ -189,17 +190,6 @@ Hare::Hare(string new_name) :
 	Animal(new_name, (string)"hare", false, true, 2, 0.063f, 0.075f)
 {
 	//randomized speed
-	srand(time(0));
 	speed = (float)((rand() % ((int)(100.0f*max_speed) + 1
 		    - (int)(100.0f*min_speed)) + (int)(100.0f*min_speed))/100.0f);
-}
-
-float Hare::calculate_time(int dist)
-{
-	float time_elapsed = (float) dist * speed;
-	//hares must rest every so often, regularly
-	float seconds_per_rest = 30.0;
-	int num_rests = (int)dist / 20;
-	time_elapsed += (seconds_per_rest * (float) num_rests);
-	return time_elapsed;
 }
