@@ -38,7 +38,7 @@ class Race{
 		bool start(void);
 		vector<Animal*> stop(void);	//returns removed animals.
 
-    //private: //commented out to debug
+    private:
 		const float distance;
 		vector<Animal*> winners; //contains ptrs to the first and second place animals.
 		vector<Animal*> losers;  //containst ptrs to animals that were removed by predation.

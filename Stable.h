@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "LLL.h"
+#include "LinkedList.h"
 #include "Animal.h"
 
 /* class Stable
@@ -24,13 +24,10 @@
  */
 
 class Stable{
-	//TODO
     public:
 		Stable(void);
 		~Stable(void);
 		//Stable(vector<Animal> new_animals); //so that program can init w/ file input
-		Stable(const Stable& other) = delete;
-		const Stable& operator=(const Stable& rhs) = delete;
 
 		bool is_empty(void);
 		bool add_animal(Animal& new_animal); //returns whether success (no dup names)
@@ -40,14 +37,12 @@ class Stable{
 		int size(void);
 		void display_breeds(void);	//allows user to select a breed by index
 		void display_breed(void);	//allows user to select an animal by index
-
-        /* foos::bar(args) TODO
-         * PURPOSE: x (what it does - how goes in .cpp)
-         * ARGS:    y
-         * RETURN:  z
-         */
-        void bar();
+		int get_num_breeds(void);
 
     private:
-		LLL<Animal&> animals; //dynamic array of LLLs of Animals
+		void copy_all_breeds(LLL<Animal>** src, LLL<Animal>** dest);
+		int count_num_breeds(const LLL<Animal>* list) const;
+
+		size_t num_breeds;
+		LLL<Animal>* animals[]; //dynamic array of LLLs of Animals
 };

@@ -17,7 +17,7 @@ class Node
 {
 	public:
 		Node(void);
-		Node(T& new_data);
+ 		Node(T& new_data);
 		Node<T>(Node<T>& src);
 		Node<T>& operator=(Node<T>& rhs);
 		~Node(void);
@@ -46,7 +46,7 @@ class LLL
 		const LLL& operator=(const LLL& rhs);
 
 		bool is_empty(void);
-		int length(void);
+		size_t length(void);
 		T& at(int index);
 		void push_back(T& new_data);
 		T* lookup(T key); //must not use reference to accept rvalue arg
@@ -56,7 +56,7 @@ class LLL
 		Node<T>* head;
 		Node<T>* tail;
 
-		int count_nodes(Node<T>* list);
+		size_t count_nodes(Node<T>* list);
 		T& find_at_index(Node<T>* list, int index);
 		void copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail, Node<T>* last_dest);
 		void remove_all(Node<T>* to_del);

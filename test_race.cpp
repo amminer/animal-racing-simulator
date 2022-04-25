@@ -25,17 +25,19 @@ int main(void)
 
 	vector<Animal*> eaten;
 	if (myRace.start()){
-		cout << "And they're off!\n";
+		cout << "\nAnd they're off!\n";
 		 eaten = myRace.stop();
 	}
 	else{
-		cout << myRace.scoreboard.length() << " competitor(s) is not enough or too many!\n";
+		cout << animalsV.size() << " competitor(s) is not enough or too many!\n";
 	}
 
-	for (int i=0; i < myRace.scoreboard.length(); i++){
+	/*
+	for (int i=0; i < animalsV.length(); i++){
 		cout << "Race has a competitor: " << *myRace.scoreboard.at(i).first
 			 << " with a score of " << myRace.scoreboard.at(i).second << '\n';
 	}
+	*/
 
 	cout << "\neaten critters:\n";
 	for (Animal* a: eaten){

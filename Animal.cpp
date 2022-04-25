@@ -147,7 +147,7 @@ float Animal::calculate_time(int dist)
 	float time_elapsed = (float) dist * (float) speed;
 	if (breed == "cat"){
 		//cats must rest every so often, randomly
-		float seconds_per_rest = 80.0;
+		float seconds_per_rest = dist / 20; //2000m race = 100s naps
 		int num_possible_rests = dist / 35;
 		for (int i=num_possible_rests; i > 0; i--){
 			if (rand() % 2) time_elapsed += seconds_per_rest; //50% chance of nap
@@ -155,7 +155,7 @@ float Animal::calculate_time(int dist)
 	}
 	else if (breed == "hare"){
 		//hares must rest every so often, regularly
-		float seconds_per_rest = 25.0;
+		float seconds_per_rest = dist / 80; //2000m race = 30s naps
 		int num_rests = dist / 20;
 		time_elapsed += (float)(seconds_per_rest * (float) num_rests);
 	}
@@ -169,7 +169,7 @@ float Animal::calculate_time(int dist)
 /*			DERIVED CLASSES - FOR USE IN STABLES, RACES				*/
 //Cat
 Cat::Cat(string new_name) :
-	Animal(new_name, (string)"cat", true, true, 4, 0.069f, 0.081f)
+	Animal(new_name, (string)"cat", true, true, 4, 0.075f, 0.087f)
 {
 	//randomized speed
 	speed = (float)((rand() % ((int)(100.0f*max_speed) + 1

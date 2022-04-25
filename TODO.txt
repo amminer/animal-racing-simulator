@@ -1,20 +1,22 @@
-Implement Race
+[X] Implement Race
 
-Stable
+[ ] Stable
 
-Stadium
+[ ] Stadium
+
+Make sure include style is gucci (need to look up - no include in cpps?)
 
 Make list funcs use refs, deal with it in consuming code
 
-ensure const is used wherever possible
+Ensure const is used wherever possible
 
-ensure objects are passed by const reference whenever possible
+Ensure objects are passed by const reference whenever possible
 
-ensure all classes with dyn mem (Animal&subs, lists, nodes) can deep copy (or delete copy constr)
+Ensure all classes with dyn mem (Animal&subs, lists, nodes) can deep copy (or delete copy constr)
 
-ensure all =operators return a reference to their object (*this)
+Ensure all =operators return a reference to their object (*this)
 
-ensure order of declarations is as follows:
+Ensure order of declarations is as follows:
 	preprocessor directives
 	includes
 	header comment
