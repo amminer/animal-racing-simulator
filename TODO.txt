@@ -1,6 +1,6 @@
 [X] Implement Race
 
-[ ] Stable
+[/] Stable
 
 [ ] Stadium
 

@@ -40,7 +40,8 @@ class Stable{
 		int get_num_breeds(void);
 
     private:
-		void copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest);
+		bool insert_to_existing_breed(Animal& new_animal, LLL<Animal>* list);
+		void copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest, size_t arr_len);
 		int count_num_breeds(const LLL<Animal>* list) const;
 
 		size_t num_breeds;

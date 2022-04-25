@@ -27,10 +27,13 @@ int main(void)
 	Stable myStable = Stable();
 	Cat newCat = Cat("Majora");
 	Cat anotherCat = Cat("Jean");
+	Tortoise newTort = Tortoise("Ankeny");
 
 	add_an_animal(myStable, newCat);	 //successfully added a new breed when the array is empty
 	add_an_animal(myStable, anotherCat); //successfully added more of existing breed
 	add_an_animal(myStable, anotherCat); //successfully rejected duplicate name!
 	//TODO test multiple rows :S add another breed...
+	add_an_animal(myStable, newTort);
+	
 	how_many_animals(myStable);			 //yep that works too (pending more testing)
 }

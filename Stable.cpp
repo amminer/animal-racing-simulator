@@ -41,11 +41,13 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 	}
 	else{ //TODO make recursive
 		//done = insert_to_existing_breed(new_animal);
-		for (size_t i=0; i<num_breeds; i++){
+		for (size_t i=0; i<num_breeds; i++){	//check for dup names
 			for (size_t j=0; j<animals[i].length(); j++){
 				if (animals[i].at(j).get_name() == new_animal.get_name())
 					return false; //NO DUPS
 			}
+		}
+		for (size_t i=0; i<num_breeds; i++){	//check for existing breed/row
 			//no empty LLLs allowed! TODO On delete_animal
 			if (animals[i].at(0).get_breed() == new_animal.get_breed()){
 				animals[i].push_back(new_animal);
@@ -54,8 +56,13 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 		}
 		if (!done){
 			num_breeds++;
-			LLL<Animal> new_animals[num_breeds];
-			copy_all_breeds(animals, new_animals); //TODO copy_all_breeds(src, dest)
+			LLL<Animal>* new_animals = new LLL<Animal>[num_breeds];
+			/* this works and seems so much easier to understand...
+			for (size_t k=0; k<num_breeds-1; k++){
+				new_animals[k] = animals[k];
+			}
+			...and yet we recurse and use pointer arithmetic */
+			copy_all_breeds(animals, new_animals, num_breeds-1); //yeehaw
 			delete [] animals;
 			animals = new_animals;
 			animals[num_breeds-1].push_back(new_animal);
@@ -63,6 +70,11 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 		}
 	}
 	return done;
+}
+
+bool Stable::insert_to_existing_breed(Animal& new_animal, LLL<Animal>* list)
+{
+	//TODO
 }
 
 int Stable::get_num_breeds(void)
@@ -77,14 +89,15 @@ int Stable::count_num_breeds(const LLL<Animal>* list) const
 		return 1 + count_num_breeds(&list[1]);
 }
 
-void Stable::copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest)
+void Stable::copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest, size_t arr_len)
 {
-	if (! src){
+	if (arr_len <= 0){
 		return;
 	}
 	else{
-		dest = new LLL<Animal>(*src);
-		copy_all_breeds(src+1, dest+1);
+		auto target = (dest + arr_len-1);
+		target = (src + arr_len-1);
+		copy_all_breeds(src, dest, arr_len - 1);
 	}
 }
 
