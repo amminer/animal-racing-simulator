@@ -21,7 +21,7 @@ Stable::Stable(void)
 Stable::~Stable(void)
 {
 	if (num_breeds != 0)
-		delete [] *animals;
+		delete [] animals;
 }
 
 bool Stable::is_empty(void)
@@ -34,30 +34,31 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 	bool done = false;
 	if (num_breeds == 0){
 		num_breeds++;
-		*animals = new LLL<Animal>[num_breeds];
-		animals[0] = new LLL<Animal>;
-		animals[0]->push_back(new_animal);
+		animals = new LLL<Animal>[num_breeds];
+		//animals[0] = new LLL<Animal>;
+		animals[0].push_back(new_animal);
 		done = true;
 	}
 	else{ //TODO make recursive
 		//done = insert_to_existing_breed(new_animal);
 		for (size_t i=0; i<num_breeds; i++){
-			for (size_t j=0; j<animals[i]->length(); j++){
-				if (animals[i]->at(j).get_name() == new_animal.get_name())
+			for (size_t j=0; j<animals[i].length(); j++){
+				if (animals[i].at(j).get_name() == new_animal.get_name())
 					return false; //NO DUPS
 			}
 			//no empty LLLs allowed! TODO On delete_animal
-			if (animals[i]->at(0).get_breed() == new_animal.get_breed()){
-				animals[i]->push_back(new_animal);
+			if (animals[i].at(0).get_breed() == new_animal.get_breed()){
+				animals[i].push_back(new_animal);
 				done = true;
 			}
 		}
 		if (!done){
-			LLL<Animal>* new_animals[num_breeds + 1];
 			num_breeds++;
+			LLL<Animal> new_animals[num_breeds];
 			copy_all_breeds(animals, new_animals); //TODO copy_all_breeds(src, dest)
 			delete [] animals;
-			*animals = *new_animals;
+			animals = new_animals;
+			animals[num_breeds-1].push_back(new_animal);
 			done = true;
 		}
 	}
@@ -76,14 +77,14 @@ int Stable::count_num_breeds(const LLL<Animal>* list) const
 		return 1 + count_num_breeds(&list[1]);
 }
 
-void Stable::copy_all_breeds(LLL<Animal>** src, LLL<Animal>** dest)
+void Stable::copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest)
 {
-	if (! *src){
+	if (! src){
 		return;
 	}
 	else{
-		*dest = new LLL<Animal>(**src);
-		copy_all_breeds(&src[1], &dest[1]);
+		dest = new LLL<Animal>(*src);
+		copy_all_breeds(src+1, dest+1);
 	}
 }
 

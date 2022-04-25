@@ -40,9 +40,9 @@ class Stable{
 		int get_num_breeds(void);
 
     private:
-		void copy_all_breeds(LLL<Animal>** src, LLL<Animal>** dest);
+		void copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest);
 		int count_num_breeds(const LLL<Animal>* list) const;
 
 		size_t num_breeds;
-		LLL<Animal>* animals[]; //dynamic array of LLLs of Animals
+		LLL<Animal>* animals; //dynamic array of LLLs of Animals
 };
