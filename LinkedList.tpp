@@ -96,9 +96,10 @@ LLL<T>::~LLL(void)
 template<typename T>
 void LLL<T>::remove_all(Node<T>* to_del)
 {
-	if (to_del != tail)
-		remove_all(to_del->get_next());
-	delete to_del; //TODO tail recursion
+	auto next_del = to_del->get_next();
+	delete to_del;
+	if (next_del)
+		remove_all(next_del);
 }
 
 template<typename T>
@@ -221,11 +222,11 @@ template<typename T>
 void LLL<T>::remove_node(Node<T>* to_del)
 {
 	if (to_del == head){			//case (head, len>1) or (head, len=1)
-		head = to_del->get_next();
 		if (head != tail)			//subcase len>1
 			head->set_prev(nullptr);
 		else						//subcase len=1
 			tail = nullptr;
+		head = to_del->get_next();
 	}
 	else if (to_del == tail){		//case tail, len>1
 		tail = to_del->get_prev();
@@ -241,20 +242,23 @@ void LLL<T>::remove_node(Node<T>* to_del)
 }
 
 template<typename T>
-void LLL<T>::display(void)
+void LLL<T>::display(bool indices)
 {
 	if (head)
-		display(head);
+		display(head, 0, indices);
 }
 
 template<typename T>
-void LLL<T>::display(Node<T>* list)
+void LLL<T>::display(Node<T>* list, size_t this_index, bool indices)
 {
 	if (!list)
 		return;
 	else{
+		if (indices){
+			std::cout << this_index+1 << ":\n";
+		}
 		std::cout << list->get_data() << '\n';
-		display(list->get_next());
+		display(list->get_next(), this_index+1, indices);
 	}
 }
 
@@ -422,20 +426,23 @@ void CLL<T>::remove_node(Node<T>* to_del)
 }
 
 template<typename T>
-void CLL<T>::display(void)
+void CLL<T>::display(bool indices)
 {
 	if (head)
-		display(head);
+		display(head, 0, indices);
 	return;
 }
 template<typename T>
-void CLL<T>::display(Node<T>* list)
+void CLL<T>::display(Node<T>* list, size_t this_index, bool indices)
 {
+	if (indices){
+		std::cout << this_index+1 << ":\n";
+	}
 	std::cout << list->get_data() <<'\n';
 	if (list == tail)
 		return;
 	else{
-		display(list->get_next());
+		display(list->get_next(), this_index+1, indices);
 	}
 }
 

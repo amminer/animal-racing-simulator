@@ -51,7 +51,7 @@ class LLL
 		void push_back(T& new_data);
 		T* lookup(T key); //must not use reference to accept rvalue arg
 		bool remove(T to_remove);
-		void display(void);
+		void display(bool indices=false);
 	private:
 		Node<T>* head;
 		Node<T>* tail;
@@ -63,7 +63,7 @@ class LLL
 		void push_back(Node<T>* list, Node<T>* new_node);
 		Node<T>* find_node(Node<T>* list, T key); //must accept rvalue arg
 		void remove_node(Node<T>* to_del);
-		void display(Node<T>* list);
+		void display(Node<T>* list, size_t this_index, bool indices=false);
 };
 
 //circular doubly linked list
@@ -81,7 +81,7 @@ class CLL
 		void push_back(T& new_data);
 		T* lookup(T key);
 		bool remove(T to_remove);
-		void display(void);
+		void display(bool indices=false);
 	private:
 		Node<T>* head;
 		Node<T>* tail;
@@ -94,7 +94,7 @@ class CLL
 		void push_back(Node<T>* list, Node<T>* new_node);
 		Node<T>* find_node(Node<T>* list, T key); //must accept rvalue arg
 		void remove_node(Node<T>* to_del);
-		void display(Node<T>* list);
+		void display(Node<T>* list, size_t this_index, bool indices=false);
 };
 
 #include "LinkedList.tpp"

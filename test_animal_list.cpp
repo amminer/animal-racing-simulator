@@ -34,7 +34,7 @@ void test_CLL(void)
 	//l.display();
 
 	cout << "\ntesting copy constructor...\n";
-	CLL m(l);
+	CLL<Animal> m(l);
 	m.display();
 
 	cout << "\ntesting predation...\n";
@@ -59,6 +59,7 @@ void test_LLL(void)
 
 	LLL<Animal> l;
 	l.push_back(x);
+	/*
 	l.push_back(y);
 	l.push_back(z);
 	l.display();
@@ -70,14 +71,12 @@ void test_LLL(void)
 	else
 		cout << "Not found! (ERROR)\n";
 
-	/*
 	cout << "\ntesting remove...\n";
 	l.remove(Animal("billy"));
 	l.display();
-	*/
 
 	cout << "\ntesting copy constructor...\n";
-	LLL m(l);
+	LLL<Animal> m(l);
 	m.display();
 
 	cout << "\ntesting predation...\n";
@@ -89,6 +88,7 @@ void test_LLL(void)
 	cout << "\ntesting len...\n" << m.length() << '\n';
 
 	cout << "\ntesting at...\n" << m.at(0) << m.at(1) << m.at(2);
+	*/
 
 	cout << "\nDONE!\n";
 }

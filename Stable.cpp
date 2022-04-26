@@ -15,6 +15,7 @@
  *	stats based on their parents.
  */
 
+/*				CONSTRUCTORS, DESTRUCTORS, OPERATORS + helpers				*/
 Stable::Stable(void)
 	: num_breeds(0) {}
 
@@ -24,6 +25,26 @@ Stable::~Stable(void)
 		delete [] animals;
 }
 
+Stable::Stable(const Stable& other)
+	: num_breeds(other.num_breeds)
+{
+	animals = new LLL<Animal>[num_breeds];
+	copy_all_breeds(other.animals, num_breeds);
+}
+//!ASSUMES dest has at least as many elements as src!
+void Stable::copy_all_breeds(LLL<Animal>* dest, size_t arr_len)
+{
+	if (arr_len <= 0){
+		return;
+	}
+	else{
+		auto target = (dest + arr_len-1);
+		*target = *(animals + arr_len-1);
+		copy_all_breeds(dest, arr_len - 1);
+	}
+}
+
+/*					PUBLIC MEMBER FUNCTIONS + helpers						*/
 bool Stable::is_empty(void)
 {
 	return (bool) (num_breeds == 0);
@@ -35,34 +56,20 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 	if (num_breeds == 0){
 		num_breeds++;
 		animals = new LLL<Animal>[num_breeds];
-		//animals[0] = new LLL<Animal>;
 		animals[0].push_back(new_animal);
 		done = true;
 	}
-	else{ //TODO make recursive
-		//done = insert_to_existing_breed(new_animal);
-		for (size_t i=0; i<num_breeds; i++){	//check for dup names
-			for (size_t j=0; j<animals[i].length(); j++){
-				if (animals[i].at(j).get_name() == new_animal.get_name())
-					return false; //NO DUPS
-			}
+	else{
+		if (check_for_dup_names(new_animal)){
+			return false;
 		}
-		for (size_t i=0; i<num_breeds; i++){	//check for existing breed/row
-			//no empty LLLs allowed! TODO On delete_animal
-			if (animals[i].at(0).get_breed() == new_animal.get_breed()){
-				animals[i].push_back(new_animal);
-				done = true;
-			}
+		else{
+			done = insert_to_existing_breed(new_animal, num_breeds);
 		}
 		if (!done){
 			num_breeds++;
 			LLL<Animal>* new_animals = new LLL<Animal>[num_breeds];
-			/* this works and seems so much easier to understand...
-			for (size_t k=0; k<num_breeds-1; k++){
-				new_animals[k] = animals[k];
-			}
-			...and yet we recurse and use pointer arithmetic */
-			copy_all_breeds(animals, new_animals, num_breeds-1); //yeehaw
+			copy_all_breeds(new_animals, num_breeds-1);
 			delete [] animals;
 			animals = new_animals;
 			animals[num_breeds-1].push_back(new_animal);
@@ -71,60 +78,113 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 	}
 	return done;
 }
-
-bool Stable::insert_to_existing_breed(Animal& new_animal, LLL<Animal>* list)
+//returns whether insertion successful (whether matching breed found)
+bool Stable::insert_to_existing_breed(Animal& new_animal, size_t arr_len)
 {
-	//TODO
+	if (arr_len == 0)
+		return false;
+	else{
+		if ((animals + arr_len - 1)->at(0).get_breed() == new_animal.get_breed()){
+			(animals + arr_len - 1)->push_back(new_animal);
+			return true;
+		}
+		else
+			return insert_to_existing_breed(new_animal, arr_len - 1);
+	}
 }
+//returns whether duplicate name detected
+bool Stable::check_for_dup_names(Animal& new_animal, size_t index)
+{
+	if (index == num_breeds)
+		return false;
+	else{
+		if ((animals + index)->lookup(new_animal))
+			return true;
+		else
+			return check_for_dup_names(new_animal, index + 1);
+	}
+} 
 
 int Stable::get_num_breeds(void)
 {
 	return num_breeds;
 }
-int Stable::count_num_breeds(const LLL<Animal>* list) const
-{
-	if (!list)
-		return 0;
-	else
-		return 1 + count_num_breeds(&list[1]);
-}
-
-void Stable::copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest, size_t arr_len)
-{
-	if (arr_len <= 0){
-		return;
-	}
-	else{
-		auto target = (dest + arr_len-1);
-		target = (src + arr_len-1);
-		copy_all_breeds(src, dest, arr_len - 1);
-	}
-}
 
 Animal* Stable::find_animal(string find_name)
 {
-	
+	return find_animal(find_name, animals, num_breeds);
+}
+Animal* Stable::find_animal(string find_name, LLL<Animal>* list, size_t arr_len)
+{
+	if (arr_len == 0)
+		return nullptr;
+	else if (Animal* found_animal =
+		(list + arr_len - 1)->lookup(Animal(find_name)); found_animal){
+		return found_animal;
+	}
+	else{
+		return find_animal(find_name, list, arr_len - 1);
+	}
 }
 
-
-Animal* Stable::get_animal_at(int row, int col)
+bool Stable::remove_animal(string remove_name)
 {
-	
+	bool done = false;
+	if (num_breeds == 0){
+	} // we will return false
+	else{
+		Animal* found_animal = find_animal(remove_name);
+		if (found_animal){
+			remove_animal(num_breeds, found_animal);
+			done = true;
+		}
+	}
+	return done;
+}
+//removes some animal; if result is empty LLL, removes that too
+void Stable::remove_animal(size_t arr_len, Animal* to_rem)
+{
+	LLL<Animal>* this_ll = (animals + arr_len - 1);
+	if (Animal* found_animal = this_ll->lookup(*to_rem); found_animal){
+		this_ll->remove(*found_animal);
+		if (this_ll->is_empty())
+			remove_empty_elmt(arr_len);
+	}
+	else{
+		remove_animal(arr_len - 1, to_rem);
+	}
+}
+//removes the (empty) LLL at index_to_rem
+void Stable::remove_empty_elmt(size_t index_to_rem)
+{
+	if (index_to_rem == num_breeds){
+		num_breeds--;
+		return;
+	}
+	else{
+		auto target = (animals + index_to_rem - 1);
+		*target = *(animals + index_to_rem);
+		return remove_empty_elmt(index_to_rem+1);
+	}
 }
 
-
-bool Stable::remove_animal(string to_remove) //returns whether success
+//allows user to select a breed by index
+void Stable::display_breeds(void)
 {
-	
+	display_breeds(num_breeds);
+}
+void Stable::display_breeds(size_t arr_len)
+{
+	if (arr_len > 0){
+		cout << "Breed " << arr_len << ":\n";
+		(*(animals + arr_len - 1)).display(true);
+		display_breeds(arr_len - 1);
+	}
+	else
+		return;
 }
 
-void Stable::display_breeds(void) //allows user to select a breed by index
+Animal* Stable::get_animal_at_indices(int breed, int individual)
 {
-	
-}
-
-
-void display_breed(void) //allows user to select an animal by index
-{
-	
+	return &(animals + breed - 1)->at(individual - 1);
 }

@@ -16,6 +16,8 @@
 
 #include "LinkedList.h"
 #include "Animal.h"
+#include <iostream>
+using std::cout;
 
 /* class Stable
  * See header comment.
@@ -27,23 +29,31 @@ class Stable{
     public:
 		Stable(void);
 		~Stable(void);
+		Stable(const Stable& other);
 		//Stable(vector<Animal> new_animals); //so that program can init w/ file input
 
 		bool is_empty(void);
 		bool add_animal(Animal& new_animal); //returns whether success (no dup names)
 		Animal* find_animal(string find_name);
 		Animal* get_animal_at(int row, int col);
-		bool remove_animal(string to_remove); //returns whether success
-		int size(void);
-		void display_breeds(void);	//allows user to select a breed by index
-		void display_breed(void);	//allows user to select an animal by index
+		bool remove_animal(string remove_name); //returns whether success
 		int get_num_breeds(void);
+		void display_breeds(void);	//allows user to select animals by index
+		Animal* get_animal_at_indices(int breed, int individual);
 
     private:
-		bool insert_to_existing_breed(Animal& new_animal, LLL<Animal>* list);
-		void copy_all_breeds(LLL<Animal>* src, LLL<Animal>* dest, size_t arr_len);
+		//recursive helper functions
+		bool insert_to_existing_breed(Animal& new_animal, size_t arr_len);
+		//returns whether duplicate name detected
+		bool check_for_dup_names(Animal& new_animal, size_t index=0);
+		void copy_all_breeds(LLL<Animal>* dest, size_t arr_len);
+		void remove_animal(size_t arr_len, Animal* to_rem); //returns whether success
+		void remove_empty_elmt(size_t index_to_rem);
 		int count_num_breeds(const LLL<Animal>* list) const;
+		Animal* find_animal(string find_name, LLL<Animal>* list, size_t arr_len);
+		void display_breeds(size_t arr_len);
 
+		//data
 		size_t num_breeds;
 		LLL<Animal>* animals; //dynamic array of LLLs of Animals
 };
