@@ -27,7 +27,9 @@
 
 #include <utility>
 #include <vector>
-#include "CLL.h"
+#include <iostream>
+#include "Stable.h"
+#include "Race.h"
 #include "Animal.h"
 
 /* class Stadium
@@ -37,10 +39,8 @@
 class Stadium{
     public:
 		Stadium(void); //main loop goes here - write menu functions?
-		~Stadium(void);
-		Stadium(const Stadium& other) = delete;
-		Stadium& operator=(const Stadium& rhs) = delete;
 
+		void startup(void);				//main loop
 		void add_to_stable(void);
 		void remove_from_stable(void);
 		void add_to_roster(void);		//temporary list of animals to race
@@ -57,7 +57,7 @@ class Stadium{
 
     private:
 		Stable stable; //see Stable.h
-		vector<Animal*> temp_roster; //Holds ptr to animals chosen by user prior to race. TODO empty per race?
+		vector<Animal*> roster; //Holds ptr to animals chosen by user prior to race. TODO empty per race
 		Animal* find_animal_by_name(string find_name);
 };
 
