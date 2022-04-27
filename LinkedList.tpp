@@ -1,7 +1,6 @@
 #pragma once
 
 #include "LinkedList.h"
-#include <stdexcept>
 
 /* Amelia Miner
  * 04/09/22
@@ -21,7 +20,7 @@ Node<T>::Node(void)
 template<typename T>
 Node<T>::Node(T& new_data)
 	: prev(nullptr), next(nullptr), data(nullptr)
-{ set_data(new_data); } //using helper probably unnecessary? TODO
+{ set_data(new_data); } //using helper may not be necessary?
 template<typename T>
 void Node<T>::set_data(T& new_data)
 {
@@ -151,7 +150,7 @@ T& LLL<T>::at(int index)
 {
 	size_t i = (size_t) index;
 	if (index < 0 or i >= length())
-		throw std::out_of_range("index out of bounds!");
+		throw out_of_range("index out of bounds!");
 	else
 		return find_at_index(head, index);
 }
@@ -255,9 +254,9 @@ void LLL<T>::display(Node<T>* list, size_t this_index, bool indices)
 		return;
 	else{
 		if (indices){
-			std::cout << this_index+1 << ":\n";
+			cout << this_index+1 << ":\n";
 		}
-		std::cout << list->get_data() << '\n';
+		cout << list->get_data() << '\n';
 		display(list->get_next(), this_index+1, indices);
 	}
 }
@@ -329,7 +328,7 @@ template<typename T>
 T& CLL<T>::at(int index)
 {
 	if (index < 0 or index >= length())
-		throw std::out_of_range("index out of bounds!");
+		throw out_of_range("index out of bounds!");
 	else
 		return find_at_index(head, index);
 }
@@ -436,9 +435,9 @@ template<typename T>
 void CLL<T>::display(Node<T>* list, size_t this_index, bool indices)
 {
 	if (indices){
-		std::cout << this_index+1 << ":\n";
+		cout << this_index+1 << ":\n";
 	}
-	std::cout << list->get_data() <<'\n';
+	cout << list->get_data() <<'\n';
 	if (list == tail)
 		return;
 	else{

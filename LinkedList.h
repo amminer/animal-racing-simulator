@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <stdexcept>
+
+using namespace std;
 
 /* Amelia Miner
  * 04/09/22

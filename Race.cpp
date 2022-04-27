@@ -1,7 +1,4 @@
 #include "Race.h"
-#include "Animal.h"
-#include <algorithm>
-#include <typeinfo>
 
 /* Amelia Miner
  * 04/11/22
@@ -80,14 +77,7 @@ bool Race::start(void)
 		vector<float> scores;
 		for (int i=0; i < num_competitors; i++){
 			Animal* this_animal = scoreboard.at(i).first;
-			/*
-			if (Cat* specific_animal = dynamic_cast<Cat*>(this_animal)){
-				std::cout << "Cat detected\n";
-				scoreboard.at(i).second = specific_animal->calculate_time(distance);
-			}
-			else
-			*/
-				scoreboard.at(i).second = this_animal->calculate_time(distance);
+			scoreboard.at(i).second = this_animal->calculate_time(distance);
 			scores.push_back(scoreboard.at(i).second);
 		}
 		//determine winners
@@ -115,5 +105,19 @@ vector<Animal*> Race::stop(void)
 {
 	std::cout << "First place: " << *winners.at(0)
 		      << "Second place: " << *winners.at(1) << '\n';
+	std::cout << "Full scoreboard:\n";
+	for (int i=0; i < scoreboard.length(); i++){
+		if (std::find(losers.begin(), losers.end(), scoreboard.at(i).first) == losers.end()){
+			std::cout << *scoreboard.at(i).first << "SCORE: "
+					  << scoreboard.at(i).second << " seconds\n"; //display in minutes:seconds?
+		}
+	}
+	if (!separators_raised){
+		std::cout << "\nAnimals lost during race:\n";
+		for (auto a: losers){
+			std::cout << *a;
+		}
+	}
+	cout << '\n';
 	return losers;
 }

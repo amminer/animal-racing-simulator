@@ -1,7 +1,9 @@
 #pragma once
 
-#include<utility>
-#include<vector>
+#include <utility>
+#include <vector>
+#include <algorithm>
+#include <typeinfo>
 #include "LinkedList.h"
 #include "Animal.h"
 

@@ -32,6 +32,8 @@
 #include "Race.h"
 #include "Animal.h"
 
+using namespace std;
+
 /* class Stadium
  * See header comment
  * Only to be instantiated in main driver code
@@ -56,6 +58,13 @@ class Stadium{
 		//export_animals(string filename); //eventually?
 
     private:
+		void remove_by_name(void);
+		void remove_by_index(void);
+		void display_roster(void);
+		void display_stable(void);
+		int get_int(void);
+		void display_cursor(void);
+
 		Stable stable; //see Stable.h
 		vector<Animal*> roster; //Holds ptr to animals chosen by user prior to race. TODO empty per race
 		Animal* find_animal_by_name(string find_name);

@@ -17,7 +17,8 @@
 #include "LinkedList.h"
 #include "Animal.h"
 #include <iostream>
-using std::cout;
+
+using namespace std;
 
 /* class Stable
  * See header comment.
@@ -35,11 +36,11 @@ class Stable{
 		bool is_empty(void);
 		bool add_animal(Animal& new_animal); //returns whether success (no dup names)
 		Animal* find_animal(string find_name);
-		Animal* get_animal_at(int row, int col);
+		Animal* find_animal(int breed, int individual);
 		bool remove_animal(string remove_name); //returns whether success
+		bool remove_animal(int row, int col); //returns whether success
 		int get_num_breeds(void);
-		void display_breeds(void);	//allows user to select animals by index
-		Animal* get_animal_at_indices(int breed, int individual);
+		void display_breeds(bool indices=false);	//allows user to select animals by index
 
     private:
 		//recursive helper functions
@@ -51,7 +52,7 @@ class Stable{
 		void remove_empty_elmt(size_t index_to_rem);
 		int count_num_breeds(const LLL<Animal>* list) const;
 		Animal* find_animal(string find_name, LLL<Animal>* list, size_t arr_len);
-		void display_breeds(size_t arr_len);
+		void display_breeds(size_t arr_len, bool indices=false);
 
 		//data
 		size_t num_breeds;

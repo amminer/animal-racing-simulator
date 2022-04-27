@@ -98,7 +98,7 @@ bool Animal::operator==(const Animal& other) const
 
 ostream& operator<<(ostream& os, const Animal& oa)
 {
-	os << "Name: " << oa.get_name() << ", breed: " << oa.get_breed() << '\n';
+	os << "NAME: " << oa.get_name() << ", BREED: " << oa.get_breed() << '\n';
 	return os;
 }
 
@@ -162,7 +162,9 @@ float Animal::calculate_time(int dist)
 	else if (breed == "tortoise"){
 		//turtles do not rest
 	}
-	//cout << "time: " << time_elapsed << '\n';
+	//final randomness - no man can know the mind of an animal, this just is
+	time_elapsed += rand() % 10;
+	time_elapsed -= rand() % 10;
 	return time_elapsed;
 }
 

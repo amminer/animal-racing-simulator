@@ -110,6 +110,12 @@ int Stable::get_num_breeds(void)
 	return num_breeds;
 }
 
+//not really safe - need to bounds check? TODO
+Animal* Stable::find_animal(int breed, int individual)
+{
+	return &(animals + breed - 1)->at(individual - 1);
+}
+
 Animal* Stable::find_animal(string find_name)
 {
 	return find_animal(find_name, animals, num_breeds);
@@ -168,23 +174,34 @@ void Stable::remove_empty_elmt(size_t index_to_rem)
 	}
 }
 
-//allows user to select a breed by index
-void Stable::display_breeds(void)
+bool Stable::remove_animal(int row, int col)
 {
-	display_breeds(num_breeds);
+	bool done = false;
+	if (num_breeds == 0){
+	} // we will return false
+	else{
+		Animal* found_animal = find_animal(row, col);
+		if (found_animal){
+			remove_animal(num_breeds, found_animal);
+			done = true;
+		}
+	}
+	return done;
 }
-void Stable::display_breeds(size_t arr_len)
+
+//allows user to select a breed by index
+void Stable::display_breeds(bool indices)
+{
+	display_breeds(num_breeds, indices);
+}
+void Stable::display_breeds(size_t arr_len, bool indices)
 {
 	if (arr_len > 0){
-		cout << "Breed " << arr_len << ":\n";
-		(*(animals + arr_len - 1)).display(true);
-		display_breeds(arr_len - 1);
+		if (indices)
+			cout << "Breed " << arr_len << ":\n";
+		(*(animals + arr_len - 1)).display(indices);
+		display_breeds(arr_len - 1, indices); //next breed
 	}
 	else
 		return;
-}
-
-Animal* Stable::get_animal_at_indices(int breed, int individual)
-{
-	return &(animals + breed - 1)->at(individual - 1);
 }

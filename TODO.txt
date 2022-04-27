@@ -2,7 +2,7 @@
 
 [X] Stable
 
-[ ] Stadium
+[/] Stadium
 
 Make sure include style is gucci (need to look up - no include in cpps?)
 
@@ -26,3 +26,7 @@ Ensure order of declarations is as follows:
 	destructor
 	methods
 	data (private or protected)
+
+RETROSPECTIVE:
+
+Should have derived an animalList from each LLL and CLL, reduce coupling dramatically between Animal and other classes
