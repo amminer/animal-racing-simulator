@@ -38,16 +38,16 @@ class Race{
 
 		//returns whether race can run, calls Animal::calculate_time and Race::remove_prey.
 		bool start(void);
-		vector<Animal*>& stop(void);	//returns removed animals.
+		vector<Animal*>& stop(void);	//returns removed animals; cannot be const, returns ref
 
     private:
+		//helper functions
+		vector<Animal*> remove_prey(void);
+		//data
 		const float distance;
 		vector<Animal*> winners; //contains ptrs to the first and second place animals.
 		vector<Animal*> losers;  //containst ptrs to animals that were removed by predation.
 		CLL< pair<Animal*, float> > scoreboard; //Holds ptr to each animal and its time.
 		const bool separators_raised; //used to determine whether predators can hunt.
-
-		const void display(void); //called from start to display contestants.
-		vector<Animal*> remove_prey(void);
 };
 

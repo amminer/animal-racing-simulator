@@ -1,21 +1,7 @@
-Ensure const is used wherever possible
-
-Ensure objects are passed by const reference whenever possible
-
-Ensure all classes with dyn mem (Animal&subs, lists, nodes) can deep copy (or delete copy constr)
-
-Ensure all =operators return a reference to their object (*this)
-
-Ensure order of declarations is as follows:
-	preprocessor directives
-	includes
-	header comment
-	constructors
-	destructor
-	methods
-	data (private or protected)
-
 RETROSPECTIVE:
 
 Should have derived an animalList from each LLL and CLL, reduce coupling dramatically between Animal and other classes
+
 Should have been better about documenting as I went, but design was somewhat in flux until the end of the project - forcing the data structures as necessary design elements made this very hard.
+
+Should have written an Animal::display_flat(void) instead of hard-coding flat output in some parts of Stadium.cpp

@@ -30,7 +30,7 @@ Stadium::Stadium(bool clear_screen)
 	startup();
 }
 
-void Stadium::clear_screen(void)
+void Stadium::clear_screen(void) const
 {
 	#ifdef WINDOWS
 		system("cls");
@@ -40,7 +40,7 @@ void Stadium::clear_screen(void)
 	#endif
 }
 
-void Stadium::pause(void)
+void Stadium::pause(void) const
 {
 	cout << "Press enter to continue...\n";
 	cin.ignore(100, '\n');
@@ -110,6 +110,7 @@ void Stadium::setup_race(int distance)
 		return;
 	}
 	int choice {-1};
+	bool ran {false};
 	bool separators;
 	if (distance == -1){
 		cout << "How many meters long should the race be? {-1 to cancel; minimum 100}\n";
@@ -117,7 +118,7 @@ void Stadium::setup_race(int distance)
 		distance = get_int();
 		if (distance == -1)
 			return;
-		else if (distance < 100){ //should be const private member var MIN_DIST TODO
+		else if (distance < 100){ //should be const private member var MIN_DIST...
 			cout << distance << " meters is not a valid choice!\n";
 			setup_race();
 			return;
@@ -144,17 +145,18 @@ void Stadium::setup_race(int distance)
 			return;
 	}
 	Race race {Race(distance, roster, separators)};
-	if (race.start()){
-		clear_roster();
+	if (ran = race.start(); ran){
 		for (Animal* rip: race.stop()){
-			stable.remove_animal(rip->get_name());
+			remove_from_stable_by_name(rip->get_name());
 		}
-		if (CLEAR_SCREEN)
-			pause();
 	}
 	else{
 		cout << "Error running race... try again\n";
 	}
+	if (ran)
+		ask_clear_roster();
+	if (CLEAR_SCREEN)
+		pause();
 	return;
 }
 void Stadium::clear_roster(void)
@@ -162,6 +164,22 @@ void Stadium::clear_roster(void)
 	while(!roster.empty())
 		roster.pop_back();
 	return;
+}
+void Stadium::ask_clear_roster(void)
+{
+		int choice {0};
+		cout << "Clear the roster?\n"
+			 << " 1 - yes\n"
+			 << " 2 - no\n";
+		display_cursor();
+		choice = get_int();
+		if (choice == 1)
+			clear_roster();
+		else if (choice != 2){
+			cout << "Invalid selection, please try again...\n";
+			ask_clear_roster();
+		}
+		return;
 }
 
 void Stadium::remove_from_roster(void)
@@ -227,9 +245,9 @@ void Stadium::remove_from_roster_by_name(string name)
 		if (auto to_del = find(roster.begin(), roster.end(), found_animal); to_del != roster.end()){
 			roster.erase(to_del);
 			cout << "Removed " << name << " from the roster.\n";
+			if (CLEAR_SCREEN)
+				pause();
 		}
-		if (CLEAR_SCREEN)
-			pause();
 	}
 	else{
 		cout << "Error removing " << name << " from the roster... try again\n";
@@ -284,7 +302,7 @@ void Stadium::add_to_roster_by_index(void)
 		}
 		else{
 			cout << found_animal->get_name() << " the "
-				 << found_animal->get_breed() << " is already in the roster!\n"; //TODO Animal::display_flat(bool flat)
+				 << found_animal->get_breed() << " is already in the roster!\n";
 		}
 		if (CLEAR_SCREEN)
 			pause();
@@ -309,7 +327,7 @@ void Stadium::add_to_roster_by_name(void)
 		}
 		else{
 			cout << found_animal->get_name() << " the "
-				 << found_animal->get_breed() << " is already in the roster!\n"; //TODO Animal::display_flat(bool flat)
+				 << found_animal->get_breed() << " is already in the roster!\n";
 		}
 		if (CLEAR_SCREEN)
 			pause();
@@ -349,6 +367,7 @@ void Stadium::remove_from_stable(void)
 void Stadium::remove_from_stable_by_index(void)
 {
 	int choice1 {0}, choice2 {0};
+	string name;
 	cout << "Enter the breed number: {-1 to cancel}\n";
 	display_cursor();
 	choice1 = get_int();
@@ -360,10 +379,11 @@ void Stadium::remove_from_stable_by_index(void)
 	if (choice2 == -1)
 		return;
 	if (Animal* found_animal = stable.find_animal(choice1, choice2)){
-		remove_from_roster_by_name(found_animal->get_name());
+		name = found_animal->get_name();
+		remove_from_roster_by_name(name);
 	}
 	if (stable.remove_animal(choice1, choice2)){
-		cout << "Removed the animal.\n";
+		cout << "Removed " << name << " from the stable.\n";
 		if (CLEAR_SCREEN)
 			pause();
 	}
@@ -372,24 +392,26 @@ void Stadium::remove_from_stable_by_index(void)
 		remove_from_stable_by_index();
 	}
 }
-void Stadium::remove_from_stable_by_name(void)
+void Stadium::remove_from_stable_by_name(string name)
 {
-	string name;
-	cout << "Enter the name of the animal to remove {!q to quit}: ";
-	getline(cin, name);
-	if (name == "!q")
-		return;
+	if (name == "_"){
+		cout << "Enter the name of the animal to remove {!q to quit}: ";
+		getline(cin, name);
+		if (name == "!q")
+			return;
+	}
+	if (Animal* found_animal = stable.find_animal(name)){
+		remove_from_roster_by_name(found_animal->get_name());
+	}
+	if (stable.remove_animal(name)){
+		cout << "Removed " << name << " from the stable.\n";
+		if (CLEAR_SCREEN)
+			pause();
+	}
 	else{
-		if (stable.remove_animal(name)){
-			cout << "Removed " << name << " from the stable.\n";
-			if (CLEAR_SCREEN)
-				pause();
-		}
-		else{
-			cout << "Error removing " << name << " from the stable... try again\n"
-				 << "(Names are case-sensitive!)\n";
-			remove_from_stable_by_name();
-		}
+		cout << "Error removing " << name << " from the stable... try again\n"
+			 << "(Names are case-sensitive!)\n";
+		remove_from_stable_by_name();
 	}
 	return;
 }
@@ -449,12 +471,14 @@ void Stadium::add_to_stable(void)
 	else{
 		cout << "Error while adding " << name << " the " << breed
 			 << " to the stable... try again\n";
+		if (CLEAR_SCREEN)
+			pause();
 	}
 	delete animal_ptr;
 	return;
 }
 
-bool Stadium::display_roster(bool indices)
+bool Stadium::display_roster(bool indices) const
 {
 	if (roster.empty()){
 		cout << "Roster is empty - choose animals from the stable!\n";
@@ -476,7 +500,7 @@ bool Stadium::display_roster(bool indices)
 	}
 }
 
-bool Stadium::display_stable(bool indices)
+bool Stadium::display_stable(bool indices) const
 {
 	if (stable.is_empty()){
 		cout << "The stable is empty - add new animals!\n";
@@ -493,7 +517,7 @@ bool Stadium::display_stable(bool indices)
 	}
 }
 
-void Stadium::display_cursor(void)
+void Stadium::display_cursor(void) const
 {
 	cout << "~>";
 }

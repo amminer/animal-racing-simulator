@@ -28,8 +28,13 @@ Stable::~Stable(void)
 Stable::Stable(const Stable& other)
 	: num_breeds(other.num_breeds)
 {
+	*this = other;
+}
+const Stable& Stable::operator=(const Stable& rhs)
+{
 	animals = new LLL<Animal>[num_breeds];
-	copy_all_breeds(other.animals, num_breeds);
+	copy_all_breeds(rhs.animals, num_breeds);
+	return *this;
 }
 //!ASSUMES dest has at least as many elements as src!
 void Stable::copy_all_breeds(LLL<Animal>* dest, size_t arr_len)
@@ -43,12 +48,12 @@ void Stable::copy_all_breeds(LLL<Animal>* dest, size_t arr_len)
 }
 
 /*					PUBLIC MEMBER FUNCTIONS + helpers						*/
-bool Stable::is_empty(void)
+bool Stable::is_empty(void) const
 {
 	return (bool) (num_breeds == 0);
 }
 
-bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup names)
+bool Stable::add_animal(const Animal& new_animal) //returns whether success (no dup names)
 {
 	bool done = false;
 	if (num_breeds == 0){
@@ -77,7 +82,7 @@ bool Stable::add_animal(Animal& new_animal) //returns whether success (no dup na
 	return done;
 }
 //returns whether insertion successful (whether matching breed found)
-bool Stable::insert_to_existing_breed(Animal& new_animal, size_t arr_len)
+bool Stable::insert_to_existing_breed(const Animal& new_animal, size_t arr_len)
 {
 	if (arr_len == 0)
 		return false;
@@ -91,7 +96,7 @@ bool Stable::insert_to_existing_breed(Animal& new_animal, size_t arr_len)
 	}
 }
 //returns whether duplicate name detected
-bool Stable::check_for_dup_names(Animal& new_animal, size_t index)
+bool Stable::check_for_dup_names(const Animal& new_animal, size_t index) const
 {
 	if (index == num_breeds)
 		return false;
@@ -103,13 +108,13 @@ bool Stable::check_for_dup_names(Animal& new_animal, size_t index)
 	}
 } 
 
-int Stable::get_num_breeds(void)
+int Stable::get_num_breeds(void) const
 {
 	return num_breeds;
 }
 
 //Returns nullptr if either index is out of bounds
-Animal* Stable::find_animal(int breed, int individual)
+Animal* Stable::find_animal(int breed, int individual) const
 {
 	if ((size_t)breed <= num_breeds and breed >0)
 		return &(animals + breed - 1)->at(individual - 1);
@@ -118,12 +123,12 @@ Animal* Stable::find_animal(int breed, int individual)
 }
 
 //Return nullptr if not found
-Animal* Stable::find_animal(string find_name)
+Animal* Stable::find_animal(string find_name) const
 {
 	Animal temp_animal {Animal(find_name)}; //templated LL requires reference arg
 	return find_animal(temp_animal, animals, num_breeds);
 }
-Animal* Stable::find_animal(Animal& to_find, LLL<Animal>* list, size_t arr_len)
+Animal* Stable::find_animal(Animal& to_find, LLL<Animal>* list, size_t arr_len) const
 {
 	if (arr_len == 0)
 		return nullptr;
@@ -194,12 +199,12 @@ bool Stable::remove_animal(int row, int col)
 }
 
 //allows user to select a breed by index
-void Stable::display_breeds(bool indices)
+void Stable::display_breeds(bool indices) const
 {
 	display_breeds(num_breeds, indices);
 	return;
 }
-void Stable::display_breeds(size_t arr_len, bool indices)
+void Stable::display_breeds(size_t arr_len, bool indices) const
 {
 	if (arr_len > 0){
 		if (indices)

@@ -18,11 +18,11 @@ Node<T>::Node(void)
 	: prev(nullptr), next(nullptr), data(nullptr) {}
 
 template<typename T>
-Node<T>::Node(T& new_data)
+Node<T>::Node(const T& new_data)
 	: prev(nullptr), next(nullptr), data(nullptr)
 { set_data(new_data); } //using helper may not be necessary?
 template<typename T>
-void Node<T>::set_data(T& new_data)
+void Node<T>::set_data(const T& new_data)
 {
 	if(data)
 		delete data;
@@ -56,9 +56,15 @@ Node<T>::~Node(void)
 template<typename T>
 Node<T>*& Node<T>::get_next(void)
 { return next; }
+template<typename T>
+Node<T>* Node<T>::get_next(void) const
+{ return next; }
 
 template<typename T>
-Node<T>*& Node<T>::get_prev(void) 
+Node<T>*& Node<T>::get_prev(void)
+{ return prev; }
+template<typename T>
+Node<T>* Node<T>::get_prev(void) const
 { return prev; }
 
 template<typename T>
@@ -76,11 +82,14 @@ void Node<T>::set_prev(Node* new_prev)
 }
 
 template<typename T>
-T& Node<T>::get_data(void) 
+T& Node<T>::get_data(void) const
 { return *data; }
 
 template<typename T>
-T*& Node<T>::get_data_ptr(void) 
+T*& Node<T>::get_data_ptr(void)
+{ return data; }
+template<typename T>
+T* Node<T>::get_data_ptr(void) const
 { return data; }
 
 /*								LLL								*/
@@ -130,14 +139,14 @@ void LLL<T>::copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail, Node<T>
 
 //				public member functions & their private helpers
 template<typename T>
-bool LLL<T>::is_empty(void)
+bool LLL<T>::is_empty(void) const
 { return !head; }
 
 template<typename T>
-size_t LLL<T>::length(void)
+size_t LLL<T>::length(void) const
 { return count_nodes(head); }
 template<typename T>
-size_t LLL<T>::count_nodes(Node<T>* list)
+size_t LLL<T>::count_nodes(Node<T>* list) const
 {
 	if (list == tail)
 		return 1;
@@ -146,7 +155,7 @@ size_t LLL<T>::count_nodes(Node<T>* list)
 }
 
 template<typename T>
-T& LLL<T>::at(size_t index)
+T& LLL<T>::at(size_t index) const
 {
 	if (index < (size_t)0 or index >= length())
 		throw out_of_range("index out of bounds!");
@@ -154,7 +163,7 @@ T& LLL<T>::at(size_t index)
 		return find_at_index(head, index);
 }
 template<typename T>
-T& LLL<T>::find_at_index(Node<T>* list, size_t index)
+T& LLL<T>::find_at_index(Node<T>* list, size_t index) const
 {
 	if (index == (size_t)0)
 		return list->get_data();
@@ -163,7 +172,7 @@ T& LLL<T>::find_at_index(Node<T>* list, size_t index)
 }
 
 template<typename T>
-void LLL<T>::push_back(T& new_data)
+void LLL<T>::push_back(const T& new_data)
 {
 	Node<T>* new_node = new Node<T>(new_data);
 	if (!head){
@@ -186,7 +195,7 @@ void LLL<T>::push_back(Node<T>* list, Node<T>* new_node)
 }
 
 template<typename T>
-T* LLL<T>::lookup(T& key) //must not use reference to accept rvalue arg?
+T* LLL<T>::lookup(const T& key) const
 {
 	T* ret = nullptr;
 	if (head)
@@ -195,7 +204,7 @@ T* LLL<T>::lookup(T& key) //must not use reference to accept rvalue arg?
 	return ret;
 }
 template<typename T>
-Node<T>* LLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg?
+Node<T>* LLL<T>::find_node(Node<T>* list, const T& key) const
 {
 	if (list->get_data() == key)
 		return list;
@@ -206,7 +215,7 @@ Node<T>* LLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg?
 }
 
 template<typename T>
-bool LLL<T>::remove(T& to_remove) //returns whether item was removed
+bool LLL<T>::remove(const T& to_remove)
 { 
 	bool ret = false;
 	if (head)
@@ -240,14 +249,14 @@ void LLL<T>::remove_node(Node<T>* to_del)
 }
 
 template<typename T>
-void LLL<T>::display(bool indices)
+void LLL<T>::display(bool indices) const
 {
 	if (head)
 		display(head, 0, indices);
 }
 
 template<typename T>
-void LLL<T>::display(Node<T>* list, size_t this_index, bool indices)
+void LLL<T>::display(Node<T>* list, size_t this_index, bool indices) const
 {
 	if (!list)
 		return;
@@ -274,7 +283,7 @@ void CLL<T>::remove_all(Node<T>* to_delete)
 {
 	if (to_delete != tail)
 		remove_all(to_delete->get_next());
-	delete to_delete; //can this be made tail recursive? TODO
+	delete to_delete; //can this be made tail recursive?
 }
 
 template<typename T>
@@ -308,14 +317,14 @@ void CLL<T>::copy_all(Node<T>* src, Node<T>*& dest, Node<T>*& dest_tail,
 
 //				public member functions
 template<typename T>
-bool CLL<T>::is_empty(void)
+bool CLL<T>::is_empty(void) const
 { return (bool) !head; }
 
 template<typename T>
-size_t CLL<T>::length(void)
+size_t CLL<T>::length(void) const
 { return count_nodes(head); }
 template<typename T>
-size_t CLL<T>::count_nodes(Node<T>* list)
+size_t CLL<T>::count_nodes(Node<T>* list) const
 {
 	if (list == tail)
 		return 1;
@@ -324,7 +333,7 @@ size_t CLL<T>::count_nodes(Node<T>* list)
 }
 
 template<typename T>
-T& CLL<T>::at(size_t index)
+T& CLL<T>::at(size_t index) const
 {
 	if (index < (size_t)0 or index >= length())
 		throw out_of_range("index out of bounds!");
@@ -332,7 +341,7 @@ T& CLL<T>::at(size_t index)
 		return find_at_index(head, index);
 }
 template<typename T>
-T& CLL<T>::find_at_index(Node<T>* list, size_t index)
+T& CLL<T>::find_at_index(Node<T>* list, size_t index) const
 {
 	if (index == (size_t)0)
 		return list->get_data();
@@ -341,7 +350,7 @@ T& CLL<T>::find_at_index(Node<T>* list, size_t index)
 }
 
 template<typename T>
-void CLL<T>::push_back(T& new_data)
+void CLL<T>::push_back(const T& new_data)
 {
 	Node<T>* new_node = new Node<T>(new_data);
 	if (!head){
@@ -368,7 +377,7 @@ void CLL<T>::push_back(Node<T>* list, Node<T>* new_node)
 }
 
 template<typename T>
-T* CLL<T>::lookup(T& key) //must not use reference to accept rvalue arg
+T* CLL<T>::lookup(const T& key) const
 {
 	Node<T>* ret_node = nullptr;
 	T* ret = nullptr;
@@ -381,7 +390,7 @@ T* CLL<T>::lookup(T& key) //must not use reference to accept rvalue arg
 	return ret;
 }
 template<typename T>
-Node<T>* CLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg
+Node<T>* CLL<T>::find_node(Node<T>* list, const T& key) const
 {
 	if (list->get_data() == key)
 		return list;
@@ -392,7 +401,7 @@ Node<T>* CLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg
 }
 
 template<typename T>
-bool CLL<T>::remove(T& to_remove) //Must accept rvalue arg
+bool CLL<T>::remove(const T& to_remove)
 { 
 	bool ret = false;
 	if (head){
@@ -424,14 +433,14 @@ void CLL<T>::remove_node(Node<T>* to_del)
 }
 
 template<typename T>
-void CLL<T>::display(bool indices)
+void CLL<T>::display(bool indices) const
 {
 	if (head)
 		display(head, 0, indices);
 	return;
 }
 template<typename T>
-void CLL<T>::display(Node<T>* list, size_t this_index, bool indices)
+void CLL<T>::display(Node<T>* list, size_t this_index, bool indices) const
 {
 	if (indices){
 		cout << this_index+1 << ":\n";

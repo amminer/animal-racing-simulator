@@ -24,7 +24,8 @@
 Race::Race(float new_distance, vector<Animal*>& competitors, bool separators)
 	: distance(new_distance), winners({nullptr, nullptr}), separators_raised(separators)
 {
-	for (Animal* elmt: competitors){
+	for (int i = competitors.size() - 1; i >= 0; i--){
+		auto elmt = competitors.at(i);
 		auto new_entry = pair<Animal*, float>(elmt, -1.0);
 		scoreboard.push_back(new_entry);
 	}

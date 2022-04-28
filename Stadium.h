@@ -1,3 +1,14 @@
+#pragma once
+
+#include <utility>
+#include <vector>
+#include <iostream>
+#include "Stable.h"
+#include "Race.h"
+#include "Animal.h"
+
+using namespace std;
+
 /* Amelia Miner
  * 04/11/22
  * cs 202 section 003
@@ -23,17 +34,6 @@
  *	which is in the closest lane to itself.
  */
 
-#pragma once
-
-#include <utility>
-#include <vector>
-#include <iostream>
-#include "Stable.h"
-#include "Race.h"
-#include "Animal.h"
-
-using namespace std;
-
 /* class Stadium
  * See header comment
  * Only to be instantiated in main driver code
@@ -43,40 +43,36 @@ class Stadium{
 		Stadium(bool clear_screen=false);
 
 		void startup(void);				//main loop
-		bool display_stable(bool indices=false);
+		bool display_stable(bool indices=false) const;
 		void add_to_stable(void);
 		void remove_from_stable(void);
 		void add_to_roster(void);		//temporary list of animals to race
 		void remove_from_roster(void);	//temporary list of animals to race
 		void setup_race(int distance=-1);
 
-        /* foos::bar(args) TODO
-         * PURPOSE: x (what it does - how goes in .cpp)
-         * ARGS:    y
-         * RETURN:  z
-         */
-		//import_animals(string filename); //eventually?
-		//export_animals(string filename); //eventually?
+		//import_animals(string filename); //intended but not implemented
+		//export_animals(string filename); //intended but not implemented
 
     private:	//private indicates nesting behind main menu
 		void clear_roster(void);
+		void ask_clear_roster(void); //called only after race is run
 		void remove_from_roster_by_name(string name="_");
 		void remove_from_roster_by_index();
 		void add_to_roster_by_name();
 		void add_to_roster_by_index();
-		void remove_from_stable_by_name();
+		void remove_from_stable_by_name(string name="_");
 		void remove_from_stable_by_index();
-		bool display_roster(bool indices=false);
+		bool display_roster(bool indices=false) const;
 
 		//pure utility//display functions
 		int get_int(void);
-		void display_cursor(void);
-		void clear_screen(void);
-		void pause(void);
+		void display_cursor(void) const;
+		void clear_screen(void) const;
+		void pause(void) const;
 
 		//data
 		Stable stable; //see Stable.h
-		vector<Animal*> roster; //Holds ptr to animals chosen by user prior to race. TODO empty per race
+		vector<Animal*> roster; //Holds ptr to animals chosen by user prior to race.
 		Animal* find_animal_by_name(string find_name);
 		
 		//flags (must be set by constructor)
