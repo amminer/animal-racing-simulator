@@ -38,7 +38,7 @@ class Race{
 
 		//returns whether race can run, calls Animal::calculate_time and Race::remove_prey.
 		bool start(void);
-		vector<Animal*> stop(void);	//returns removed animals.
+		vector<Animal*>& stop(void);	//returns removed animals.
 
     private:
 		const float distance;

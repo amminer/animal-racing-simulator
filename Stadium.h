@@ -43,11 +43,12 @@ class Stadium{
 		Stadium(void); //main loop goes here - write menu functions?
 
 		void startup(void);				//main loop
+		bool display_stable(bool indices=false);
 		void add_to_stable(void);
 		void remove_from_stable(void);
 		void add_to_roster(void);		//temporary list of animals to race
 		void remove_from_roster(void);	//temporary list of animals to race
-		void setup_race(void);
+		void setup_race(int distance=-1);
 
         /* foos::bar(args) TODO
          * PURPOSE: x (what it does - how goes in .cpp)
@@ -58,10 +59,14 @@ class Stadium{
 		//export_animals(string filename); //eventually?
 
     private:
-		void remove_by_name(void);
-		void remove_by_index(void);
-		void display_roster(void);
-		void display_stable(void);
+		void clear_roster(void);
+		void remove_from_roster_by_name(string name="_");
+		void remove_from_roster_by_index();
+		void add_to_roster_by_name();
+		void add_to_roster_by_index();
+		void remove_by_name();
+		void remove_by_index();
+		bool display_roster(bool indices=false);
 		int get_int(void);
 		void display_cursor(void);
 

@@ -113,7 +113,10 @@ int Stable::get_num_breeds(void)
 //not really safe - need to bounds check? TODO
 Animal* Stable::find_animal(int breed, int individual)
 {
-	return &(animals + breed - 1)->at(individual - 1);
+	if ((size_t)breed <= num_breeds and breed >0)
+		return &(animals + breed - 1)->at(individual - 1);
+	else
+		return nullptr;
 }
 
 Animal* Stable::find_animal(string find_name)

@@ -146,18 +146,17 @@ size_t LLL<T>::count_nodes(Node<T>* list)
 }
 
 template<typename T>
-T& LLL<T>::at(int index)
+T& LLL<T>::at(size_t index)
 {
-	size_t i = (size_t) index;
-	if (index < 0 or i >= length())
+	if (index < (size_t)0 or index >= length())
 		throw out_of_range("index out of bounds!");
 	else
 		return find_at_index(head, index);
 }
 template<typename T>
-T& LLL<T>::find_at_index(Node<T>* list, int index)
+T& LLL<T>::find_at_index(Node<T>* list, size_t index)
 {
-	if (index == 0)
+	if (index == (size_t)0)
 		return list->get_data();
 	else
 		return find_at_index(list->get_next(), index-1);
@@ -313,10 +312,10 @@ bool CLL<T>::is_empty(void)
 { return (bool) !head; }
 
 template<typename T>
-int CLL<T>::length(void)
+size_t CLL<T>::length(void)
 { return count_nodes(head); }
 template<typename T>
-int CLL<T>::count_nodes(Node<T>* list)
+size_t CLL<T>::count_nodes(Node<T>* list)
 {
 	if (list == tail)
 		return 1;
@@ -325,17 +324,17 @@ int CLL<T>::count_nodes(Node<T>* list)
 }
 
 template<typename T>
-T& CLL<T>::at(int index)
+T& CLL<T>::at(size_t index)
 {
-	if (index < 0 or index >= length())
+	if (index < (size_t)0 or index >= length())
 		throw out_of_range("index out of bounds!");
 	else
 		return find_at_index(head, index);
 }
 template<typename T>
-T& CLL<T>::find_at_index(Node<T>* list, int index)
+T& CLL<T>::find_at_index(Node<T>* list, size_t index)
 {
-	if (index == 0)
+	if (index == (size_t)0)
 		return list->get_data();
 	else
 		return find_at_index(list->get_next(), index-1);

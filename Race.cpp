@@ -101,18 +101,19 @@ bool Race::start(void)
 		return false;
 }
 
-vector<Animal*> Race::stop(void)
+vector<Animal*>& Race::stop(void)
 {
-	std::cout << "First place: " << *winners.at(0)
-		      << "Second place: " << *winners.at(1) << '\n';
+	std::cout << "First place: " << *winners.at(0);
+	if (winners.at(1))
+		cout << "Second place: " << *winners.at(1) << '\n';
 	std::cout << "Full scoreboard:\n";
-	for (int i=0; i < scoreboard.length(); i++){
+	for (size_t i=0; i < scoreboard.length(); i++){
 		if (std::find(losers.begin(), losers.end(), scoreboard.at(i).first) == losers.end()){
 			std::cout << *scoreboard.at(i).first << "SCORE: "
 					  << scoreboard.at(i).second << " seconds\n"; //display in minutes:seconds?
 		}
 	}
-	if (!separators_raised){
+	if (!separators_raised and !losers.empty()){
 		std::cout << "\nAnimals lost during race:\n";
 		for (auto a: losers){
 			std::cout << *a;
