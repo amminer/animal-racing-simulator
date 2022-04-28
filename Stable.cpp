@@ -34,14 +34,12 @@ Stable::Stable(const Stable& other)
 //!ASSUMES dest has at least as many elements as src!
 void Stable::copy_all_breeds(LLL<Animal>* dest, size_t arr_len)
 {
-	if (arr_len <= 0){
-		return;
-	}
-	else{
+	if (!(arr_len <= 0)){
 		auto target = (dest + arr_len-1);
 		*target = *(animals + arr_len-1);
 		copy_all_breeds(dest, arr_len - 1);
 	}
+	return;
 }
 
 /*					PUBLIC MEMBER FUNCTIONS + helpers						*/
@@ -110,7 +108,7 @@ int Stable::get_num_breeds(void)
 	return num_breeds;
 }
 
-//not really safe - need to bounds check? TODO
+//Returns nullptr if either index is out of bounds
 Animal* Stable::find_animal(int breed, int individual)
 {
 	if ((size_t)breed <= num_breeds and breed >0)
@@ -119,6 +117,7 @@ Animal* Stable::find_animal(int breed, int individual)
 		return nullptr;
 }
 
+//Return nullptr if not found
 Animal* Stable::find_animal(string find_name)
 {
 	return find_animal(find_name, animals, num_breeds);
@@ -162,19 +161,20 @@ void Stable::remove_animal(size_t arr_len, Animal* to_rem)
 	else{
 		remove_animal(arr_len - 1, to_rem);
 	}
+	return;
 }
 //removes the (empty) LLL at index_to_rem
 void Stable::remove_empty_elmt(size_t index_to_rem)
 {
 	if (index_to_rem == num_breeds){
 		num_breeds--;
-		return;
 	}
 	else{
 		auto target = (animals + index_to_rem - 1);
 		*target = *(animals + index_to_rem);
-		return remove_empty_elmt(index_to_rem+1);
+		remove_empty_elmt(index_to_rem+1);
 	}
+	return;
 }
 
 bool Stable::remove_animal(int row, int col)
@@ -196,6 +196,7 @@ bool Stable::remove_animal(int row, int col)
 void Stable::display_breeds(bool indices)
 {
 	display_breeds(num_breeds, indices);
+	return;
 }
 void Stable::display_breeds(size_t arr_len, bool indices)
 {
@@ -205,6 +206,5 @@ void Stable::display_breeds(size_t arr_len, bool indices)
 		(*(animals + arr_len - 1)).display(indices);
 		display_breeds(arr_len - 1, indices); //next breed
 	}
-	else
-		return;
+	return;
 }

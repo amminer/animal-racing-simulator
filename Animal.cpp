@@ -1,3 +1,5 @@
+#include"Animal.h"
+
 /* Amelia Miner
  * 04/09/22
  * cs 202 section 003
@@ -11,8 +13,6 @@
  *  The containing Race object tracks the result of each comparison
  * 	amongst its competitors and determines the winner and runner up.
  */
-
-#include"Animal.h"
 
 /*		used to constrain size property of base Animal class		*/
 size_brackets::size_brackets(void)

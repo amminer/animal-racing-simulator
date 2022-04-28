@@ -1,11 +1,3 @@
-[X] Implement Race
-
-[X] Stable
-
-[/] Stadium
-
-Make sure include style is gucci (need to look up - no include in cpps?)
-
 Make Stable entirely recursive... shouldn't be too bad, just some helpers in add_animal
 
 Make list funcs use refs, deal with it in consuming code

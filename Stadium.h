@@ -40,7 +40,7 @@ using namespace std;
  */
 class Stadium{
     public:
-		Stadium(void); //main loop goes here - write menu functions?
+		Stadium(bool clear_screen=false);
 
 		void startup(void);				//main loop
 		bool display_stable(bool indices=false);
@@ -58,20 +58,28 @@ class Stadium{
 		//import_animals(string filename); //eventually?
 		//export_animals(string filename); //eventually?
 
-    private:
+    private:	//private indicates nesting behind main menu
 		void clear_roster(void);
 		void remove_from_roster_by_name(string name="_");
 		void remove_from_roster_by_index();
 		void add_to_roster_by_name();
 		void add_to_roster_by_index();
-		void remove_by_name();
-		void remove_by_index();
+		void remove_from_stable_by_name();
+		void remove_from_stable_by_index();
 		bool display_roster(bool indices=false);
+
+		//pure utility//display functions
 		int get_int(void);
 		void display_cursor(void);
+		void clear_screen(void);
+		void pause(void);
 
+		//data
 		Stable stable; //see Stable.h
 		vector<Animal*> roster; //Holds ptr to animals chosen by user prior to race. TODO empty per race
 		Animal* find_animal_by_name(string find_name);
+		
+		//flags (must be set by constructor)
+		bool CLEAR_SCREEN;
 };
 
