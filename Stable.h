@@ -51,7 +51,7 @@ class Stable{
 		void remove_animal(size_t arr_len, Animal* to_rem); //returns whether success
 		void remove_empty_elmt(size_t index_to_rem);
 		int count_num_breeds(const LLL<Animal>* list) const;
-		Animal* find_animal(string find_name, LLL<Animal>* list, size_t arr_len);
+		Animal* find_animal(Animal& to_find, LLL<Animal>* list, size_t arr_len);
 		void display_breeds(size_t arr_len, bool indices=false);
 
 		//data

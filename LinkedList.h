@@ -52,8 +52,8 @@ class LLL
 		size_t length(void);
 		T& at(size_t index);
 		void push_back(T& new_data);
-		T* lookup(T key); //must not use reference to accept rvalue arg
-		bool remove(T to_remove);
+		T* lookup(T& key); //must not use reference to accept rvalue arg
+		bool remove(T& to_remove);
 		void display(bool indices=false);
 	private:
 		Node<T>* head;
@@ -82,8 +82,8 @@ class CLL
 		size_t length(void);
 		T& at(size_t index);
 		void push_back(T& new_data);
-		T* lookup(T key);
-		bool remove(T to_remove);
+		T* lookup(T& key);
+		bool remove(T& to_remove);
 		void display(bool indices=false);
 	private:
 		Node<T>* head;

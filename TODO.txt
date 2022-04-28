@@ -1,7 +1,3 @@
-Make Stable entirely recursive... shouldn't be too bad, just some helpers in add_animal
-
-Make list funcs use refs, deal with it in consuming code
-
 Ensure const is used wherever possible
 
 Ensure objects are passed by const reference whenever possible
@@ -22,3 +18,4 @@ Ensure order of declarations is as follows:
 RETROSPECTIVE:
 
 Should have derived an animalList from each LLL and CLL, reduce coupling dramatically between Animal and other classes
+Should have been better about documenting as I went, but design was somewhat in flux until the end of the project - forcing the data structures as necessary design elements made this very hard.

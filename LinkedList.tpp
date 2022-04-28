@@ -186,7 +186,7 @@ void LLL<T>::push_back(Node<T>* list, Node<T>* new_node)
 }
 
 template<typename T>
-T* LLL<T>::lookup(T key) //must not use reference to accept rvalue arg?
+T* LLL<T>::lookup(T& key) //must not use reference to accept rvalue arg?
 {
 	T* ret = nullptr;
 	if (head)
@@ -206,7 +206,7 @@ Node<T>* LLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg?
 }
 
 template<typename T>
-bool LLL<T>::remove(T to_remove) //returns whether item was removed
+bool LLL<T>::remove(T& to_remove) //returns whether item was removed
 { 
 	bool ret = false;
 	if (head)
@@ -368,7 +368,7 @@ void CLL<T>::push_back(Node<T>* list, Node<T>* new_node)
 }
 
 template<typename T>
-T* CLL<T>::lookup(T key) //must not use reference to accept rvalue arg
+T* CLL<T>::lookup(T& key) //must not use reference to accept rvalue arg
 {
 	Node<T>* ret_node = nullptr;
 	T* ret = nullptr;
@@ -392,7 +392,7 @@ Node<T>* CLL<T>::find_node(Node<T>* list, T key) //must accept rvalue arg
 }
 
 template<typename T>
-bool CLL<T>::remove(T to_remove) //Must accept rvalue arg
+bool CLL<T>::remove(T& to_remove) //Must accept rvalue arg
 { 
 	bool ret = false;
 	if (head){

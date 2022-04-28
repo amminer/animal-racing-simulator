@@ -120,18 +120,19 @@ Animal* Stable::find_animal(int breed, int individual)
 //Return nullptr if not found
 Animal* Stable::find_animal(string find_name)
 {
-	return find_animal(find_name, animals, num_breeds);
+	Animal temp_animal {Animal(find_name)}; //templated LL requires reference arg
+	return find_animal(temp_animal, animals, num_breeds);
 }
-Animal* Stable::find_animal(string find_name, LLL<Animal>* list, size_t arr_len)
+Animal* Stable::find_animal(Animal& to_find, LLL<Animal>* list, size_t arr_len)
 {
 	if (arr_len == 0)
 		return nullptr;
 	else if (Animal* found_animal =
-		(list + arr_len - 1)->lookup(Animal(find_name)); found_animal){
+			(list + arr_len - 1)->lookup(to_find); found_animal){
 		return found_animal;
 	}
 	else{
-		return find_animal(find_name, list, arr_len - 1);
+		return find_animal(to_find, list, arr_len - 1);
 	}
 }
 
