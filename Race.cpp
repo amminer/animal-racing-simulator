@@ -48,7 +48,7 @@ vector<Animal*> Race::remove_prey(void)
 		if (i!=0){							//check prev animal unless on head
 			Animal* prev_animal = scoreboard.at(i-1).first;
 			if (this_animal->predates(*prev_animal)
-				and std::find(ret.begin(), ret.end(), prev_animal) == ret.end()){ //i eats i-1
+				and find(ret.begin(), ret.end(), prev_animal) == ret.end()){ //i eats i-1
 				ret.push_back(scoreboard.at(i-1).first);
 				scoreboard.at(i).second += penalty_for_eating;
 				continue; //one meal per predator
@@ -57,7 +57,7 @@ vector<Animal*> Race::remove_prey(void)
 		else if (i != num_competitors-1){	//check next animal unless on tail
 			Animal* next_animal = scoreboard.at(i+1).first;
 			if (this_animal->predates(*next_animal)
-				and std::find(ret.begin(), ret.end(), next_animal) == ret.end()){ //i eats i+1
+				and find(ret.begin(), ret.end(), next_animal) == ret.end()){ //i eats i+1
 				ret.push_back(scoreboard.at(i+1).first);
 				scoreboard.at(i).second += penalty_for_eating;
 				continue; //one meal per predator
@@ -84,7 +84,7 @@ bool Race::start(void)
 		//determine winners
 		pair<Animal*, float> gold=pair(nullptr, -1.0), silver=pair(nullptr, -1.0);
 		for (int i=0; i < num_competitors; i++){
-			if (std::find(losers.begin(), losers.end(), scoreboard.at(i).first) == losers.end()){
+			if (find(losers.begin(), losers.end(), scoreboard.at(i).first) == losers.end()){
 				if (scores.at(i) < gold.second or gold.second < 0){
 					if (gold.first)
 						silver = gold;
@@ -104,20 +104,20 @@ bool Race::start(void)
 
 vector<Animal*>& Race::stop(void)
 {
-	std::cout << "First place: " << *winners.at(0);
+	cout << "First place: " << *winners.at(0);
 	if (winners.at(1))
 		cout << "Second place: " << *winners.at(1) << '\n';
-	std::cout << "Full scoreboard:\n";
+	cout << "Full scoreboard:\n";
 	for (size_t i=0; i < scoreboard.length(); i++){
-		if (std::find(losers.begin(), losers.end(), scoreboard.at(i).first) == losers.end()){
-			std::cout << *scoreboard.at(i).first << "SCORE: "
+		if (find(losers.begin(), losers.end(), scoreboard.at(i).first) == losers.end()){
+			cout << *scoreboard.at(i).first << "SCORE: "
 					  << scoreboard.at(i).second << " seconds\n"; //display in minutes:seconds?
 		}
 	}
 	if (!separators_raised and !losers.empty()){
-		std::cout << "\nAnimals lost during race:\n";
+		cout << "\nAnimals lost during race:\n";
 		for (auto a: losers){
-			std::cout << *a;
+			cout << *a;
 		}
 	}
 	cout << '\n';

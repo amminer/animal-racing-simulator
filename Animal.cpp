@@ -121,12 +121,7 @@ string Animal::get_breed(void) const
 	return breed;
 }
 
-void Animal::display(void) //necessary/useful?
-{
-	cout << *this;
-}
-
-bool Animal::is(Animal& other)
+bool Animal::is(const Animal& other) const
 {
 	return this == &other; //compares pointers
 }
@@ -142,6 +137,10 @@ bool Animal::predates(Animal& other)
 	return ret;
 }
 
+/*	Animal::calculate_time(int dist)
+ *		Regrettably, behavior must be added to the base class implementation
+ *	by checking the value of string breed and altering the return value.
+ */
 float Animal::calculate_time(int dist)
 {
 	float time_elapsed = (float) dist * (float) speed;
@@ -150,7 +149,7 @@ float Animal::calculate_time(int dist)
 		float seconds_per_rest = dist / 20; //2000m race = 100s naps
 		int num_possible_rests = dist / 35;
 		for (int i=num_possible_rests; i > 0; i--){
-			if (rand() % 2) time_elapsed += seconds_per_rest; //50% chance of nap
+			if (rand() % 2) time_elapsed += seconds_per_rest; //50% nap chance
 		}
 	}
 	else if (breed == "hare"){
@@ -160,9 +159,9 @@ float Animal::calculate_time(int dist)
 		time_elapsed += (float)(seconds_per_rest * (float) num_rests);
 	}
 	else if (breed == "tortoise"){
-		//turtles do not rest
+		//turtles do not rest (placeholder)
 	}
-	//final randomness - no man can know the mind of an animal, this just is
+	//final randomness - no man can truly know the mind of an animal
 	time_elapsed += rand() % 10;
 	time_elapsed -= rand() % 10;
 	return time_elapsed;

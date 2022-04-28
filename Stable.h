@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LinkedList.h"
-#include "Animal.h"
-#include <iostream>
+#include "LinkedList.h" //stores animals in memory for stadium to refer or point to 
+#include "Animal.h"		//stables hold animals
+#include <iostream>		//display contents of stable
 
 using namespace std;
 
@@ -34,26 +34,26 @@ class Stable{
 		const Stable& operator=(const Stable& rhs);
 		//Stable(vector<Animal> new_animals); //so that program can init w/ file input
 
-		bool is_empty(void) const;
+		bool is_empty(void) const; //returns whether stable has animals
 		bool add_animal(const Animal& new_animal); //returns whether success (no dup names)
-		Animal* find_animal(string find_name) const;
-		Animal* find_animal(int breed, int individual) const;
+		Animal* find_animal(string find_name) const; //returns nullptr if not found
+		Animal* find_animal(int breed, int individual) const; //returns nullptr if not found
 		bool remove_animal(string remove_name); //returns whether success
 		bool remove_animal(int row, int col); //returns whether success
-		int get_num_breeds(void) const;
+		int get_num_breeds(void) const; //returns number of breeds for display, future condition checks
 		void display_breeds(bool indices=false) const;	//allows user to select animals by index
 
     private:
 		//recursive helper functions
-		bool insert_to_existing_breed(const Animal& new_animal, size_t arr_len);
+		bool insert_to_existing_breed(const Animal& new_animal, size_t arr_len); //from add_animal()
 		//returns whether duplicate name detected
-		bool check_for_dup_names(const Animal& new_animal, size_t index=0) const;
-		void copy_all_breeds(LLL<Animal>* dest, size_t arr_len);
-		void remove_animal(size_t arr_len, Animal* to_rem);
-		void remove_empty_elmt(size_t index_to_rem);
-		int count_num_breeds(const LLL<Animal>* list) const;
+		bool check_for_dup_names(const Animal& new_animal, size_t index=0) const; //from add_animal()
+		void copy_all_breeds(LLL<Animal>* dest, size_t arr_len); //from copy constructor, dynamic array redim
+		void remove_animal(size_t arr_len, Animal* to_rem); //recursive helper from remove_animal()
+		void remove_empty_elmt(size_t index_to_rem); //recursive helper from remove_animal()
+		//returns nullptr if not found
 		Animal* find_animal(Animal& to_find, LLL<Animal>* list, size_t arr_len) const;
-		void display_breeds(size_t arr_len, bool indices=false) const;
+		void display_breeds(size_t arr_len, bool indices=false) const; //allows selection by index
 
 		//data
 		size_t num_breeds;

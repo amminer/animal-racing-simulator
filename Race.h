@@ -1,11 +1,12 @@
 #pragma once
 
-#include <utility>
-#include <vector>
-#include <algorithm>
-#include <typeinfo>
-#include "LinkedList.h"
-#include "Animal.h"
+#include <vector>		//storing and passing winners and losers (predated)
+#include <algorithm>	//std::find, check for presence of animals in win/lose
+#include <iostream>		//display race information in stop()
+#include "LinkedList.h" //store competitors
+#include "Animal.h"		//races use animals
+
+using namespace std;
 
 /* Amelia Miner
  * 04/11/22
@@ -42,7 +43,8 @@ class Race{
 
     private:
 		//helper functions
-		vector<Animal*> remove_prey(void);
+		vector<Animal*> remove_prey(void); //enforces predation mechanic (called by start())
+
 		//data
 		const float distance;
 		vector<Animal*> winners; //contains ptrs to the first and second place animals.

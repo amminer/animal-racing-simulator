@@ -108,11 +108,6 @@ bool Stable::check_for_dup_names(const Animal& new_animal, size_t index) const
 	}
 } 
 
-int Stable::get_num_breeds(void) const
-{
-	return num_breeds;
-}
-
 //Returns nullptr if either index is out of bounds
 Animal* Stable::find_animal(int breed, int individual) const
 {
