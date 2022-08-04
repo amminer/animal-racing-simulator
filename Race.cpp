@@ -78,6 +78,9 @@ bool Race::start(void)
 		vector<float> scores;
 		for (int i=0; i < num_competitors; i++){
 			Animal* this_animal = scoreboard.at(i).first;
+			//retrospective TODO a couple of weeks after submission - should rewrite this to
+			//use dynamic_cast so I can actually implement derived calculate_time behaviors
+			//instead of the hacky switch statement thing I did in the base class.
 			scoreboard.at(i).second = this_animal->calculate_time(distance);
 			scores.push_back(scoreboard.at(i).second);
 		}
