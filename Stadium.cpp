@@ -238,6 +238,7 @@ void Stadium::remove_from_roster_by_name(string name)
 	if (name == "_"){
 		cout << "Enter the name of the animal {!q to quit}: ";
 		getline(cin, name);
+		cout << '\n';
 		if (name == "!q")
 			return;
 	}
@@ -318,6 +319,7 @@ void Stadium::add_to_roster_by_name(void)
 	string name;
 	cout << "Enter the name of the animal {!q to quit}: ";
 	getline(cin, name);
+	cout << '\n';
 	if (name == "!q")
 		return;
 	if (auto found_animal = stable.find_animal(name); found_animal){
@@ -397,6 +399,7 @@ void Stadium::remove_from_stable_by_name(string name)
 	if (name == "_"){
 		cout << "Enter the name of the animal to remove {!q to quit}: ";
 		getline(cin, name);
+		cout << '\n';
 		if (name == "!q")
 			return;
 	}
@@ -422,6 +425,7 @@ int Stadium::get_int(void)
 	cin >> choice;
 	cin.clear();
 	cin.ignore(100, '\n');
+	cout << '\n';
 	return choice;
 }
 
@@ -436,6 +440,7 @@ void Stadium::add_to_stable(void)
 	Animal* animal_ptr {nullptr}; 
 	cout << "What is the new animal's name? {!q to quit} ";
 	getline(cin, name);
+	cout << '\n';
 	if (name == "!q")
 		return;
 	cout << "What is the new animal's breed?\n"
